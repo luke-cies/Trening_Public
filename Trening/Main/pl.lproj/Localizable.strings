@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Trening
+
+  Created by Łukasz Cieślik on 09/03/2023.
+  
+*/
+
+//MARK: - Model
+"training.status.todo" = "Przygotowany";
+"training.status.inProgress" = "W trakcie";
+"training.status.done" = "Wykonany";
+"training.status.synchronised" = "Zsynchronizowany";
+"trainingSubType.mass" = "Masa";
+"trainingSubType.reduction" = "Redukcja";
+"trainingSubType.deload" = "Deload";
