@@ -6,6 +6,11 @@
   
 */
 
+"error" = "Błąd";
+"ok" = "OK";
+"cancel" = "Anuluj";
+"loading" = "Ładowanie";
+
 //MARK: - Model
 "training.status.todo" = "Przygotowany";
 "training.status.inProgress" = "W trakcie";
@@ -14,3 +19,32 @@
 "trainingSubType.mass" = "Masa";
 "trainingSubType.reduction" = "Redukcja";
 "trainingSubType.deload" = "Deload";
+
+//MARK: - Login
+"login.loginError" = "Nie udało się zalogować użytkownika";
+"login.emailPassword.incorrect" = "Email lub hasło jest nieprawidłowe";
+"login.emailPassword.passwordTooShort" = "Hasło jest zbyt krótkie";
+"login.emailPassword.notAnEmail" = "Nieprawidłowy format email";
+"login.emailPassword.email.placeholder" = "Email";
+"login.emailPassword.password.placeholder" = "Hasło";
+"login.register.label" = "Nie masz konta?";
+"login.register.signUp" = "Zarejestruj się";
+"login.loggingIn" = "Logowanie";
+"login.loggingOut.title" = "Jesteś pewien że chcesz się wylogować?";
+"login.loggingOut" = "Wyloguj";
+"login.firstName.placeholder" = "Imię";
+"login.lastName.placeholder" = "Nazwisko";
+"login.loginButton.title" = "Zaloguj";
+"login.saveButton.title" = "Zapisz";
+"login.error.firstName.tooShort" = "Imię zbyt krótkie";
+"login.error.lastName.tooShort" = "Nazwisko zbyt krótkie";
+"login.error.missingData" = "Wypełnij wszystkie pola!";
+"login.password.changeButton.title" = "Zmień";
+"login.password.new.alertTitle" = "Zmiana hasła";
+"login.password.new.placeholder" = "Nowe hasło";
+"login.updateCreateUser.error" = "Coś poszło nie tak :-(";
+
+//MARK: - Account
+"account.info" = "O aplikacji";
+"account.settings" = "Ustawienia";
+"account.info.appVersion" = "Wersja aplikacji:";

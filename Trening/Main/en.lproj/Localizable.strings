@@ -6,6 +6,11 @@
   
 */
 
+"error" = "Error";
+"ok" = "OK";
+"cancel" = "Cancel";
+"loading" = "Loading";
+
 //MARK: - Model
 "training.status.todo" = "Ready";
 "training.status.inProgress" = "In progress";
@@ -14,3 +19,32 @@
 "trainingSubType.mass" = "Mass";
 "trainingSubType.reduction" = "Reduction";
 "trainingSubType.deload" = "Deload";
+
+//MARK: - Login and register
+"login.loginError" = "Cannot login user";
+"login.emailPassword.incorrect" = "Email or password is incorrect";
+"login.emailPassword.passwordTooShort" = "The password is too short";
+"login.emailPassword.notAnEmail" = "Wrong email format";
+"login.emailPassword.email.placeholder" = "Email";
+"login.emailPassword.password.placeholder" = "Password";
+"login.register.label" = "Don't have an account?";
+"login.register.signUp" = "Sign up";
+"login.loggingIn" = "Logging in";
+"login.loggingOut.title" = "Are you sure you want to log out?";
+"login.loggingOut" = "Log Out";
+"login.firstName.placeholder" = "First name";
+"login.lastName.placeholder" = "Last name";
+"login.loginButton.title" = "Log In";
+"login.saveButton.title" = "Save";
+"login.error.firstName.tooShort" = "First name too short";
+"login.error.lastName.tooShort" = "Last name too short";
+"login.error.missingData" = "Fulfill all necessary fields!";
+"login.password.changeButton.title" = "Change";
+"login.password.new.alertTitle" = "Password changeing";
+"login.password.new.placeholder" = "New password";
+"login.updateCreateUser.error" = "Something went wrong :-(";
+
+//MARK: - Account
+"account.info" = "About";
+"account.settings" = "Settings";
+"account.info.appVersion" = "Application version:";

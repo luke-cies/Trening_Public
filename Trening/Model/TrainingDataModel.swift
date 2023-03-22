@@ -6,18 +6,19 @@
 //
 
 import Foundation
+import UIKit
 
-enum TrainingMethod: String{
+enum TrainingMethod: String, Equatable, CaseIterable, Codable{
     case HST
     case FBW
 }
 
-enum TrainingType: Int{
+enum TrainingType: Int, Codable{
     case scheme
     case plan
 }
 
-enum TrainingStatus: Int{
+enum TrainingStatus: Int, Equatable, CaseIterable, Codable{
     case toDo
     case inProgress
     case done
@@ -33,7 +34,7 @@ enum TrainingStatus: Int{
     }
 }
 
-enum TrainingSubType: Int{
+enum TrainingSubType: Int, Equatable, CaseIterable, Codable{
     case mass
     case reduction
     case deload
@@ -47,25 +48,55 @@ enum TrainingSubType: Int{
     }
 }
 
-struct User{
-    let userId: String = UUID().uuidString
+struct User: Codable{
+    var userId: String = UUID().uuidString
     var email: String
     var firstName: String
     var lastName: String
+    var password: String//#####
+    var passwordChanged: Bool = false
     var isRemoved: Bool = false
-    var avatarPath: String
     var avatarFileName: String
+    var avatarData: Data?
     var isLoggedIn: Bool = false
+    
+    //Read Only
+    var fullName: String{
+        "\(firstName) \(lastName)"
+    }
+    
+    //Methods
+    func getAvatarImage() -> UIImage?{
+        guard let avatarPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(avatarFileName) else { return nil }
+        do{
+            let data = try Data(contentsOf: avatarPath)
+            return UIImage(data: data)
+        }
+        catch{
+            Logger.error("Cannot load image from path: \(avatarPath)")
+        }
+        return nil
+    }
+    
+    mutating func setAvatarImage(_ image: UIImage){
+        avatarData = image.pngData()
+    }
+    
+    ///Gets avatar image from AvatarData property
+    func getAvatarDataImage() -> UIImage?{
+        guard let avatarData = avatarData else { return nil }
+        return UIImage(data: avatarData)
+    }
 }
 
-struct Exercise{
-    let id: String = UUID().uuidString
+struct Exercise: Codable{
+    var id: String = UUID().uuidString
     let name: String
     let userId: String//creator
 }
 
-struct TrainingScheme{
-    let id: String = UUID().uuidString
+struct TrainingScheme: Codable{
+    var id: String = UUID().uuidString
     var trainingMethod: TrainingMethod
     var name: String
     var numberOfWorkouts: Int
@@ -74,17 +105,17 @@ struct TrainingScheme{
     var trainingSchemeData: TrainingSchemeData
 }
 
-struct TrainingSchemeData{
-    let id: String = UUID().uuidString
+struct TrainingSchemeData: Codable{
+    var id: String = UUID().uuidString
     var exercise: Exercise
     var numberOfSeries: Int
     var weight: Double
     var addWeight: Double //Skok ciężaru
 }
 
-struct Training{
+struct Training: Codable{
     let userId: String//creator
-    let id: String = UUID().uuidString
+    var id: String = UUID().uuidString
     var status: TrainingStatus = .toDo
     var trainingMethod: TrainingMethod
     let planId: String//TrainingScheme.id
@@ -94,8 +125,8 @@ struct Training{
     var trainingData: String
 }
 
-struct TrainingData{
-    let id: String = UUID().uuidString
+struct TrainingData: Codable{
+    var id: String = UUID().uuidString
     var status: TrainingStatus = .toDo//without InProgress!!
     var exercise: Exercise
     var plannedNumberOfSeries: Int

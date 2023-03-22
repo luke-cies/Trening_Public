@@ -1,5 +1,5 @@
 //
-//  TrainingHistoryViewController.swift
+//  TrainingHistoryController.swift
 //  Trening
 //
 //  Created by Łukasz Cieślik on 10/03/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TrainingHistoryViewController: UIViewController{
+class TrainingHistoryController: UIViewController{
     //MARK: - Properties
     
     //MARK: - Init
@@ -22,7 +22,10 @@ class TrainingHistoryViewController: UIViewController{
         view.backgroundColor = .red
     }
     
+
+    
     //MARK: - Private
+    
     
     //MARK: - Public
     
