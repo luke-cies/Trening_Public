@@ -9,9 +9,15 @@ import Foundation
 import UIKit
 
 struct DefaultDataModel{
-    static func initDefaultData(){
+    static func initDefaultUser(){
         if UserDefaults.isFirstRun {
             DefaultDataModel.createDefaultUser()
+        }
+    }
+    
+    static func initDefaultData(){
+        if UserDefaults.isFirstRun {
+            DefaultDataModel.createDefaultExercises()
             UserDefaults.isFirstRun = false
         }
     }
@@ -27,6 +33,16 @@ struct DefaultDataModel{
         Service.createUser(credentials: c) { (err, usr) in
             if err != nil{
                 Logger.error("Cannot create default user: \(c)")
+            }
+        }
+    }
+    
+    //MARK: - Exercises
+    private static func createDefaultExercises(){
+        let ex = ["exercise.name.deadLift".localized, "exercise.name.benchPress".localized, "exercise.name.flyFlints".localized ,"exercise.name.dips".localized, "exercise.name.soldierySqueeze".localized, "exercise.name.pullUps".localized, "exercise.name.squats".localized]
+        if let user = Service.loggedInUser(){
+            ex.forEach { name in
+                Service.createExercise(name: name, user: user) {(err, ex) in}//Don't do anything. Just create it
             }
         }
     }

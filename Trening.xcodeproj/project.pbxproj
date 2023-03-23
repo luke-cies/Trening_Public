@@ -30,6 +30,11 @@
 		BCB2A6BB29C994B5003B67B7 /* RegisterUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6BA29C994B5003B67B7 /* RegisterUserViewModel.swift */; };
 		BCB2A6BD29C997A0003B67B7 /* AvatarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6BC29C997A0003B67B7 /* AvatarControl.swift */; };
 		BCB2A6C229CAEBAB003B67B7 /* WaitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6C129CAEBAA003B67B7 /* WaitView.swift */; };
+		BCB2A6D129CC32F3003B67B7 /* ExerciseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6D029CC32F3003B67B7 /* ExerciseController.swift */; };
+		BCB2A6D329CC40D1003B67B7 /* ExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6D229CC40D1003B67B7 /* ExerciseViewModel.swift */; };
+		BCB2A6D629CC50D7003B67B7 /* TButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6D529CC50D7003B67B7 /* TButton.swift */; };
+		BCB2A6D929CC5638003B67B7 /* MenuComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6D829CC5637003B67B7 /* MenuComponent.swift */; };
+		BCB2A6DB29CC6429003B67B7 /* ExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6DA29CC6429003B67B7 /* ExerciseCell.swift */; };
 		BCBE9A7D29BB145B00672DAC /* TrainingHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE9A7C29BB145B00672DAC /* TrainingHistoryController.swift */; };
 		BCBE9A7F29BB182E00672DAC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE9A7E29BB182E00672DAC /* LoginController.swift */; };
 		BCBE9A8129BB1C1800672DAC /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBE9A8029BB1C1800672DAC /* UIView+Extension.swift */; };
@@ -77,6 +82,11 @@
 		BCB2A6BA29C994B5003B67B7 /* RegisterUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserViewModel.swift; sourceTree = "<group>"; };
 		BCB2A6BC29C997A0003B67B7 /* AvatarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarControl.swift; sourceTree = "<group>"; };
 		BCB2A6C129CAEBAA003B67B7 /* WaitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitView.swift; sourceTree = "<group>"; };
+		BCB2A6D029CC32F3003B67B7 /* ExerciseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseController.swift; sourceTree = "<group>"; };
+		BCB2A6D229CC40D1003B67B7 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
+		BCB2A6D529CC50D7003B67B7 /* TButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TButton.swift; sourceTree = "<group>"; };
+		BCB2A6D829CC5637003B67B7 /* MenuComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuComponent.swift; sourceTree = "<group>"; };
+		BCB2A6DA29CC6429003B67B7 /* ExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCell.swift; sourceTree = "<group>"; };
 		BCBE9A7C29BB145B00672DAC /* TrainingHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingHistoryController.swift; sourceTree = "<group>"; };
 		BCBE9A7E29BB182E00672DAC /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		BCBE9A8029BB1C1800672DAC /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -141,6 +151,7 @@
 		BC023B1629B9BE4200C1D1D8 /* Trening */ = {
 			isa = PBXGroup;
 			children = (
+				BCB2A6D429CC4507003B67B7 /* New Group */,
 				BC023B2E29B9BEB800C1D1D8 /* Database */,
 				BC023B2F29B9BECE00C1D1D8 /* Main */,
 				BC023B4129B9C0DC00C1D1D8 /* View */,
@@ -179,13 +190,15 @@
 		BC023B4129B9C0DC00C1D1D8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BCB2A6D729CC5188003B67B7 /* Cells */,
 				BCC80CDE29BF28390045A274 /* InputContainerView.swift */,
 				BCC80CE029BF34730045A274 /* CustomTextField.swift */,
 				BCB2A6AC29C46C65003B67B7 /* ProfileHeader.swift */,
-				BCB2A6B029C4718C003B67B7 /* ProfileCell.swift */,
 				BCB2A6B129C4718C003B67B7 /* ProfileFoter.swift */,
 				BCB2A6BC29C997A0003B67B7 /* AvatarControl.swift */,
 				BCB2A6C129CAEBAA003B67B7 /* WaitView.swift */,
+				BCB2A6D529CC50D7003B67B7 /* TButton.swift */,
+				BCB2A6D829CC5637003B67B7 /* MenuComponent.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -197,6 +210,7 @@
 				BCB2A6A829C45542003B67B7 /* MainMenuViewModel.swift */,
 				BCB2A6AE29C470A4003B67B7 /* ProfileViewModel.swift */,
 				BCB2A6BA29C994B5003B67B7 /* RegisterUserViewModel.swift */,
+				BCB2A6D229CC40D1003B67B7 /* ExerciseViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -233,6 +247,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		BCB2A6D429CC4507003B67B7 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		BCB2A6D729CC5188003B67B7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BCB2A6B029C4718C003B67B7 /* ProfileCell.swift */,
+				BCB2A6DA29CC6429003B67B7 /* ExerciseCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		BCBE9A7B29BB10B100672DAC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +271,7 @@
 				BCB2A6A629C44872003B67B7 /* MainMenuController.swift */,
 				BCB2A6AA29C46BD0003B67B7 /* ProfileController.swift */,
 				BCB2A6B829C86564003B67B7 /* RegisterUserController.swift */,
+				BCB2A6D029CC32F3003B67B7 /* ExerciseController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -382,6 +413,8 @@
 				BCB2A6B929C86564003B67B7 /* RegisterUserController.swift in Sources */,
 				BCC80CD929BB3EE10045A274 /* Service.swift in Sources */,
 				BC023B1A29B9BE4200C1D1D8 /* SceneDelegate.swift in Sources */,
+				BCB2A6D629CC50D7003B67B7 /* TButton.swift in Sources */,
+				BCB2A6D329CC40D1003B67B7 /* ExerciseViewModel.swift in Sources */,
 				BCC80CDD29BF209B0045A274 /* UIColor+Extension.swift in Sources */,
 				BCB2A6AD29C46C65003B67B7 /* ProfileHeader.swift in Sources */,
 				BCB2A6C229CAEBAB003B67B7 /* WaitView.swift in Sources */,
@@ -389,12 +422,15 @@
 				BCC80CE329BF3B1B0045A274 /* LoginViewModel.swift in Sources */,
 				BCBE9A7F29BB182E00672DAC /* LoginController.swift in Sources */,
 				BCB2A6A929C45542003B67B7 /* MainMenuViewModel.swift in Sources */,
+				BCB2A6D929CC5638003B67B7 /* MenuComponent.swift in Sources */,
+				BCB2A6D129CC32F3003B67B7 /* ExerciseController.swift in Sources */,
 				BCB2A6B729C84308003B67B7 /* GradientBaseController.swift in Sources */,
 				BC023B4929B9D96300C1D1D8 /* String+Extension.swift in Sources */,
 				BCB2A6AF29C470A4003B67B7 /* ProfileViewModel.swift in Sources */,
 				BCB2A6AB29C46BD0003B67B7 /* ProfileController.swift in Sources */,
 				BCC80CEE29C1AB240045A274 /* Logger.swift in Sources */,
 				BCC80CDB29BB3F800045A274 /* UserDefaults+Extension.swift in Sources */,
+				BCB2A6DB29CC6429003B67B7 /* ExerciseCell.swift in Sources */,
 				BC023B2229B9BE4200C1D1D8 /* Trening.xcdatamodeld in Sources */,
 				BCC80CD429BB2C000045A274 /* UIViewController+Extension.swift in Sources */,
 				BCB2A6B229C4718D003B67B7 /* ProfileCell.swift in Sources */,

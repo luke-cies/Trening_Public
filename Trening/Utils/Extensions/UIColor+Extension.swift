@@ -42,6 +42,10 @@ extension UIColor{
         .dynamicColor(lightMode: .color(0, 36, 98, 1.0), darkMode: .color(0, 36, 98, 1.0))
     }
     
+    static var TLineGray: UIColor{
+        .dynamicColor(lightMode: .lightGray, darkMode: .lightGray)
+    }
+    
     //MARK: - Public
     static func dynamicColor(lightMode: UIColor, darkMode: UIColor) -> UIColor {
         guard #available(iOS 13.0, *) else { return lightMode }

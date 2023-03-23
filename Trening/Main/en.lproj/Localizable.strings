@@ -49,3 +49,23 @@
 "account.info" = "About";
 "account.settings" = "Settings";
 "account.info.appVersion" = "Application version:";
+
+//MARK: - Default Exercises
+"exercise.name.deadLift" = "DEAD LIFT";
+"exercise.name.benchPress" = "BENCH PRESS LYING ON A HORIZONTAL BENCH";
+"exercise.name.flyFlints" = "FLY FLINTS WITH DUMBELLARS LYING ON A HORIZONTAL BENCH";
+"exercise.name.dips" = "TRICEPS DIPS";
+"exercise.name.soldierySqueeze" = "SOLDIERY SQUEEZE";
+"exercise.name.pullUps" = "PULL-UPS ON THE STICK";
+"exercise.name.squats" = "SQUATS";
+
+//MARK: - MainMenu
+"menu.button.exercise" = "Exercises";
+"menu.button.schemes" = "Training schemes";
+"menu.button.training" = "Train";
+"menu.button.plan" = "Plan";
+"menu.button.history" = "History";
+"menu.button.max" = "Max";
+"menu.segment.title.settings" = "Settings";
+"menu.segment.title.training" = "Training";
+"menu.segment.title.result" = "Results";

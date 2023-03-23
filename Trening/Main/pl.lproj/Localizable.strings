@@ -49,3 +49,23 @@
 "account.info" = "O aplikacji";
 "account.settings" = "Ustawienia";
 "account.info.appVersion" = "Wersja aplikacji:";
+
+//MARK: - Default Exercises
+"exercise.name.deadLift" = "MARTWY CIĄG";
+"exercise.name.benchPress" = "WYCISKANIE SZTANGI W LEŻENIU NA ŁAWCE POZIOMEJ";
+"exercise.name.flyFlints" = "ROZPIĘTKI ZE SZTANGIELKAMI W LEŻENIU NA ŁAWCE POZIOMEJ";
+"exercise.name.dips" = "POMPKI NA PORĘCZACH";
+"exercise.name.soldierySqueeze" = "WYCISKANIE ŻOŁNIERSKIE";
+"exercise.name.pullUps" = "PODCIĄGANIE NA DRĄŻKU";
+"exercise.name.squats" = "PRZYSIADY ZE SZTANGĄ NA BARKACH";
+
+//MARK: - MainMenu
+"menu.button.exercise" = "Lista Ćwiczeń";//Exercise
+"menu.button.schemes" = "Schematy treningu";
+"menu.button.training" = "Wykonaj trening";
+"menu.button.plan" = "Planuj";
+"menu.button.history" = "Historia";
+"menu.button.max" = "Maxy";
+"menu.segment.title.settings" = "Ustawienia";
+"menu.segment.title.training" = "Trening";
+"menu.segment.title.result" = "Wyniki";
