@@ -42,14 +42,16 @@ class LoginController: GradientBaseController{
         b.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return b
     }()
-    private let emailTextField: CustomTextField = {
+    private lazy var emailTextField: CustomTextField = {
         let e = CustomTextField(placeholder: "login.emailPassword.email.placeholder".localized)
         e.keyboardType = .emailAddress
+        e.delegate = self
         return e
     }()
-    private let passwordTextField: CustomTextField = {
+    private lazy var passwordTextField: CustomTextField = {
         let tf = CustomTextField(placeholder: "login.emailPassword.password.placeholder".localized)
         tf.isSecureTextEntry = true
+        tf.delegate = self
         return tf
     }()
     private lazy var dontHaveAccountButton: UIButton = {
@@ -97,16 +99,16 @@ class LoginController: GradientBaseController{
         emailTextField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
         
+        
         emailTextField.becomeFirstResponder()
     }
     
-    //MARK: - Private
-    
     //MARK: - Events
     @objc func handleShowSignUp(){
-//        let controller = RegistrationController()
-//        controller.delegate = delegate
-//        navigationController?.pushViewController(controller, animated: true)
+        let vc = RegisterUserController()
+        vc.delegate = self
+        vc.editMode = false
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func textDidChanged(sender: UITextField){
@@ -144,5 +146,29 @@ extension LoginController: AuthenticationControllerProtocol{
             loginButton.isEnabled = false
             loginButton.backgroundColor = .TButtonGrayInactive
         }
+    }
+}
+
+//MARK: - RegisterUserControllerDelegate
+extension LoginController: RegisterUserControllerDelegate{
+    func updateUser(_ user: User) {
+        showLoader(true, withText: "login.loggingIn".localized)
+        viewModel.loginUser(user) { result in
+            if result == false{
+                self.showLoader(false)
+                self.showError("login.loginError".localized)
+                return
+            }
+            self.showLoader(false)
+            self.delegate?.authenticationComplete()
+        }
+    }
+}
+
+//MARK: - UITextFieldDelegate
+extension LoginController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }

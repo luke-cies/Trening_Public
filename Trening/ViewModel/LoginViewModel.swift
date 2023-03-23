@@ -16,12 +16,13 @@ protocol LoginViewModelProtocol: AuthenicationProtocol{
     var email: String? {get set}
     var password: String? {get set}
     func loginUser(_ completion: @escaping (Bool) -> Void)
+    mutating func loginUser(_ user: User, completion: @escaping (Bool) -> Void)
 }
 
 struct LoginViewModel: LoginViewModelProtocol{
     //MARK: - Properties
     var users: [User]{
-        UserDefaults.users
+        Service.users
     }
     var email: String?
     var password: String?
@@ -33,7 +34,23 @@ struct LoginViewModel: LoginViewModelProtocol{
             return
         }
         let hashedPass = password.encode()
-        Service.loginUser(email: email, password: hashedPass, completion: completion)
+        login(email: email, password: hashedPass, completion: completion)
+    }
+    
+    mutating func loginUser(_ user: User, completion: @escaping (Bool) -> Void){
+        email = user.email
+        password = user.password
+        
+        guard let email = email, let password = password else {
+            completion(false)
+            return
+        }
+        login(email: email, password: password, completion: completion)
+    }
+    
+    //MARK: - Private
+    private func login(email: String, password: String, completion: @escaping (Bool) -> Void){
+        Service.loginUser(email: email, password: password, completion: completion)
     }
 }
 

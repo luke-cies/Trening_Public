@@ -18,16 +18,21 @@ class RegisterUserController : GradientBaseController{
     var editMode: Bool = false {
         didSet{
             emailTextField.isEnabled = !editMode
+            passwordTextField.isEnabled = !editMode
+            changeButton.isHidden = !editMode
             viewModel.isEditMode = editMode
         }
     }
-    private let emailTextField: CustomTextField = CustomTextField(placeholder: "login.emailPassword.email.placeholder".localized)
+    private let emailTextField: CustomTextField = {
+        let e = CustomTextField(placeholder: "login.emailPassword.email.placeholder".localized)
+        e.keyboardType = .emailAddress
+        return e
+    }()
     private let firstNameTextField: CustomTextField = CustomTextField(placeholder: "login.firstName.placeholder".localized)
     private let lastNameTextField: CustomTextField = CustomTextField(placeholder: "login.lastName.placeholder".localized)
     private let passwordTextField: CustomTextField = {
         let tf = CustomTextField(placeholder: "login.emailPassword.password.placeholder".localized)
         tf.isSecureTextEntry = true
-        tf.isEnabled = false
         return tf
     }()
     private lazy var emailContainerView: UIView = {
@@ -41,6 +46,12 @@ class RegisterUserController : GradientBaseController{
     }()
     private lazy var passwordContainerView: InputContainerView = {
         let p = InputContainerView(image: UIImage(named: "Login/lock"), textField: passwordTextField)
+        p.addSubviews(changeButton)
+        changeButton.centerY(inView: p)
+        changeButton.anchor(right: p.rightAnchor, paddingRight: 5, width: 50)
+        return p
+    }()
+    private lazy var changeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("login.password.changeButton.title".localized, for: .normal)
         button.layer.cornerRadius = 5
@@ -49,11 +60,7 @@ class RegisterUserController : GradientBaseController{
         button.setTitleColor(.white, for: .normal)
         button.setHeight(height: 25)
         button.addTarget(self, action: #selector(didTapOnChangePasswordButton), for: .touchUpInside)
-        
-        p.addSubviews(button)
-        button.centerY(inView: p)
-        button.anchor(right: p.rightAnchor, paddingRight: 5, width: 50)
-        return p
+        return button
     }()
     private lazy var saveButton: UIButton = {
         let b = UIButton(type: .system)
@@ -142,13 +149,16 @@ class RegisterUserController : GradientBaseController{
         waitView.isHidden = false
         viewModel.save {[weak self] (isSuccess, usr) in
             if !isSuccess{
-                self?.showError("login.updateCreateUser.error".localized)
+                let desc = (self?.editMode == true) ? "login.updateUser.error".localized : "login.createUser.error".localized
+                self?.showError(desc)
             }
             else{
                 if let user = usr{
                     self?.delegate?.updateUser(user)
                 }
-                self?.dismiss(animated: true)
+                if self?.editMode == true{
+                    self?.dismiss(animated: true)
+                }
             }
             self?.waitView.isHidden = true
         }

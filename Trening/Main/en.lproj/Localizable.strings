@@ -42,7 +42,8 @@
 "login.password.changeButton.title" = "Change";
 "login.password.new.alertTitle" = "Password changeing";
 "login.password.new.placeholder" = "New password";
-"login.updateCreateUser.error" = "Something went wrong :-(";
+"login.updateUser.error" = "Something went wrong :-(";
+"login.createUser.error" = "User already exists";
 
 //MARK: - Account
 "account.info" = "About";

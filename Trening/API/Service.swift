@@ -41,7 +41,7 @@ struct RegistrationCredentials: RegistrationCredentialsProtocol{
 
 struct Service: UserAPIProtocol{
     //MARK: - Properties
-    private static var users: [User]{
+    static var users: [User]{
         get{ UserDefaults.users }
         set{ UserDefaults.users = newValue }
     }

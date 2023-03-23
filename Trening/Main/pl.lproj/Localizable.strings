@@ -42,7 +42,8 @@
 "login.password.changeButton.title" = "Zmień";
 "login.password.new.alertTitle" = "Zmiana hasła";
 "login.password.new.placeholder" = "Nowe hasło";
-"login.updateCreateUser.error" = "Coś poszło nie tak :-(";
+"login.updateUser.error" = "Coś poszło nie tak :-(";
+"login.createUser.error" = "Użytkownik już istnieje";
 
 //MARK: - Account
 "account.info" = "O aplikacji";

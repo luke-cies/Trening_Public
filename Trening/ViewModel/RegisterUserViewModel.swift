@@ -127,7 +127,7 @@ extension RegisterUserViewModel: RegisterUserProtocol{
             let c = RegistrationCredentials(email: email!, password: password!, firstName: firstName!, lastName: lastName!, profileImage: avatarImage)
             Service.createUser(credentials: c) { (err, user) in
                 if err != nil{
-                    Logger.error("Cannot create default user: \(c)")
+                    Logger.error("Cannot create user: \(c)")
                 }
                 completion(err == nil, user)
             }
