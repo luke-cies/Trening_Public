@@ -114,11 +114,11 @@ class RegisterUserController : GradientBaseController{
         
         view.addSubviews(avatar, stack)
         avatar.centerX(inView: view)
-        avatar.anchor(top: view.topAnchor, paddingTop: 10)
+        avatar.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 10)
         stack.anchor(top: avatar.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
         
         view.addSubviews(dissmissButton)
-        dissmissButton.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 12, width: 48, height: 48)
+        dissmissButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 20, paddingLeft: 12, width: 48, height: 48)
         
         emailTextField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
