@@ -11,21 +11,28 @@ import Foundation
 extension UserDefaults{
     //MARK: - Public
     static var users: [User] {
-        get{
-            db.users
-        }
-        set{
-            db.users = newValue
-        }
+        get{ db.users }
+        set{ db.users = newValue }
     }
     
     static var isFirstRun: Bool {
-        get{
-            !standard.bool(forKey: Keys.firstRun.rawValue)
-        }
-        set{
-            standard.set(!newValue, forKey: Keys.firstRun.rawValue)
-        }
+        get{ !standard.bool(forKey: Keys.firstRun.rawValue) }
+        set{  standard.set(!newValue, forKey: Keys.firstRun.rawValue) }
+    }
+    
+    static var exercises: [Exercise]{
+        get{ db.exercises }
+        set{ db.exercises = newValue }
+    }
+    
+    static var trainingSchemes: [TrainingScheme]{
+        get{ db.trainingSchemes }
+        set{ db.trainingSchemes = newValue }
+    }
+    
+    static var trainings: [Training]{
+        get{ db.trainings }
+        set{ db.trainings = newValue }
     }
     
     //MARK: - Enum

@@ -13,7 +13,7 @@ class TButton: UIControl{
     //MARK: - Properties
     private var lbl: UILabel = {
         let l = UILabel(frame: .zero)
-        l.font = .boldSystemFont(ofSize: 12)
+        l.font = .boldSystemFont(ofSize: Consts.buttonSize)
         l.textColor = .white
         l.textAlignment = .center
         return l
@@ -23,7 +23,7 @@ class TButton: UIControl{
             lbl.text = title
         }
     }
-    var fontSize: CGFloat = 12{
+    var fontSize: CGFloat = Consts.buttonSize{
         didSet{
             lbl.font = .boldSystemFont(ofSize: fontSize)
         }
@@ -39,16 +39,17 @@ class TButton: UIControl{
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func create(_ title: String) -> TButton{
+    static func create(_ title: String, fontSize: CGFloat = Consts.buttonSize) -> TButton{
         let b = TButton(frame: .zero)
         b.title = title
+        b.fontSize = fontSize
         return b
     }
     
     //MARK: - UI
     private func setupUI(){
         backgroundColor = .TButtonGray
-        setHeight(height: 50)
+        setHeight(height: Consts.buttonHeight)
         
         addSubviews(lbl)
         lbl.pinToEdges(of: self)

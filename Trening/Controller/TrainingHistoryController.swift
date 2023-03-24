@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TrainingHistoryController: UIViewController{
+class TrainingHistoryController: GradientBaseController{
     //MARK: - Properties
     
     //MARK: - Init

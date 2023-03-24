@@ -10,7 +10,25 @@ import UIKit
 
 enum UserOperationError: Error{
     case alreadyExist//create
-    case cannotFind//updae
+    case cannotFind//update
+}
+
+enum ExerciseOperationError: Error{
+    case alreadyExist
+    case cannotFind
+    
+    var description: String{
+        switch(self){
+        case .alreadyExist:
+            return "exercise.alert.error.alreadyExist.message".localized
+        case .cannotFind:
+            return "exercise.alert.error.cannotFind.message".localized
+        }
+    }
+}
+
+enum TrainingSchemeError: Error{
+    
 }
 
 protocol RegistrationCredentialsProtocol{
@@ -21,13 +39,40 @@ protocol RegistrationCredentialsProtocol{
     var profileImage: UIImage {get set}
 }
 
-protocol UserAPIProtocol{
-    static func fetchUsers(completion: @escaping ([User]) -> Void)
-    static func fetchUser(withUid uid: String, completion: @escaping (User?) -> Void)
+protocol TrainingSchemeCredentialsProtocol{
+    var method: TrainingMethod {get set}
+    var name: String {get set}
+    var numberOfWorkouts: Int {get set}
+    var trainingType: TrainingType {get set}
+    var trainingSchemeData: TrainingSchemeData {get set}
+}
+
+protocol UserApiProtocol{
+    static var users: [User] {get set}
+//    static func fetchUsers(completion: @escaping ([User]) -> Void)
+//    static func fetchUser(withUid uid: String, completion: @escaping (User?) -> Void)
     static func createUser(credentials: RegistrationCredentialsProtocol, completion: @escaping (UserOperationError?, User?) -> Void)
     static func updateUser(_ user: User, completion: @escaping (UserOperationError?, User) -> Void)
     static func loginUser(email: String, password: String, completion: @escaping (Bool) -> Void)
     static func logoutCurrentUser(completion: @escaping (Bool) -> Void)
+}
+
+protocol ExerciseApiProtocol{
+    static var exercises: [Exercise] {get set}
+    static func createExercise(name: String, user: User, completion: @escaping (ExerciseOperationError?, Exercise?) -> Void)
+//    static func fetchExercises(_ completion: @escaping ([Exercise]) -> Void)
+    static func removeExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void)
+    static func updateExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void)
+}
+
+protocol TrainingSchemesApiProtocol{
+    static var trainingSchemes: [TrainingScheme] {get set}
+    static func addTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void)
+    
+}
+
+protocol TrainingsApiProtocol{
+    static var trainings: [Training] {get set}
 }
 
 struct RegistrationCredentials: RegistrationCredentialsProtocol{
@@ -38,23 +83,29 @@ struct RegistrationCredentials: RegistrationCredentialsProtocol{
     var profileImage: UIImage
 }
 
+struct TrainingSchemeCredentials: TrainingSchemeCredentialsProtocol{
+    var method: TrainingMethod
+    var name: String
+    var numberOfWorkouts: Int
+    var trainingType: TrainingType
+    var trainingSchemeData: TrainingSchemeData
+}
 
-struct Service: UserAPIProtocol{
+struct Service: UserApiProtocol{
     //MARK: - Properties
     static var users: [User]{
         get{ UserDefaults.users }
         set{ UserDefaults.users = newValue }
     }
     
-    //MARK: - Static Methods
-    static func fetchUsers(completion: @escaping ([User]) -> Void) {
-        completion(users)
-    }
-    
-    static func fetchUser(withUid uid: String, completion: @escaping (User?) -> Void) {
-        let usr = users.first { $0.userId == uid }
-        completion(usr)
-    }
+//    static func fetchUsers(completion: @escaping ([User]) -> Void) {
+//        completion(users)
+//    }
+//
+//    static func fetchUser(withUid uid: String, completion: @escaping (User?) -> Void) {
+//        let usr = users.first { $0.userId == uid }
+//        completion(usr)
+//    }
     
     static func createUser(credentials: RegistrationCredentialsProtocol, completion: @escaping (UserOperationError?, User?) -> Void) {
         if let _ = users.first(where: { $0.email == credentials.email }){
@@ -174,14 +225,87 @@ struct Service: UserAPIProtocol{
     }
 }
 
+//MARK: - ExerciseProtocol
+extension Service: ExerciseApiProtocol{
+    static var exercises: [Exercise]{
+        get{ UserDefaults.exercises }
+        set{ UserDefaults.exercises = newValue }
+    }
+    
+    static func createExercise(name: String, user: User, completion: @escaping (ExerciseOperationError?, Exercise?) -> Void){
+        if let _ = exercises.first(where: { $0.name == name && $0.userId == user.userId }){
+            Logger.error("Exercise: \(name) already exist")
+            completion(.alreadyExist, nil)
+            return
+        }
+        let ex = Exercise(name: name, userId: user.userId)
+        exercises.append(ex)
+        Logger.log("New Exercise created \(ex)")
+        completion(nil, ex)
+    }
+    
+//    static func fetchExercises(_ completion: @escaping ([Exercise]) -> Void){
+//        completion(exercises)
+//    }
+    
+    static func removeExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void) {
+        if let idx = exercises.firstIndex(where: { $0.id == exercise.id }){
+            exercises.remove(at: idx)
+            Logger.log("Exercise \(exercise) was removed")
+            completion(nil)
+        }
+        else{
+            Logger.error("Cannot remove exercise because it doesn't exist. \(exercise)")
+            completion(.cannotFind)
+        }
+    }
+    
+    static func updateExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void) {
+        if let idx = exercises.firstIndex(where: { $0.id == exercise.id }){
+            exercises[idx] = exercise
+            Logger.log("Exercise \(exercise) was updated")
+            completion(nil)
+        }
+        else{
+            Logger.error("Cannot edit exercise because it doesn't exist. \(exercise)")
+            completion(.cannotFind)
+        }
+    }
+}
+
+//MARK: - TrainingSchemesProtocol
+extension Service: TrainingSchemesApiProtocol{
+    static func addTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void) {
+        
+    }
+    
+    static var trainingSchemes: [TrainingScheme]{
+        get{ UserDefaults.trainingSchemes }
+        set{ UserDefaults.trainingSchemes = newValue }
+    }
+}
+
+//MARK: - TrainingsProtocol
+extension Service: TrainingsApiProtocol{
+    static var trainings: [Training]{
+        get{ UserDefaults.trainings }
+        set{ UserDefaults.trainings = newValue }
+    }
+}
+
+
 struct DB: Codable{
     //MARK: - Properties
     var users: [User]
     var exercises: [Exercise]
+    var trainingSchemes: [TrainingScheme]
+    var trainings: [Training]
 
     //MARK: - Init
     init(){
         users = [User]()
         exercises = [Exercise]()
+        trainingSchemes = [TrainingScheme]()
+        trainings = [Training]()
     }
 }

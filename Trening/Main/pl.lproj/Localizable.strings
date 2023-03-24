@@ -10,6 +10,9 @@
 "ok" = "OK";
 "cancel" = "Anuluj";
 "loading" = "Ładowanie";
+"add" = "Dodaj";
+"done" = "Gotowe";
+"save" = "Zapisz";
 
 //MARK: - Model
 "training.status.todo" = "Przygotowany";
@@ -61,7 +64,7 @@
 
 //MARK: - MainMenu
 "menu.button.exercise" = "Lista Ćwiczeń";//Exercise
-"menu.button.schemes" = "Schematy treningu";
+"menu.button.schemes" = "Dodaj schemat treningu";
 "menu.button.training" = "Wykonaj trening";
 "menu.button.plan" = "Planuj";
 "menu.button.history" = "Historia";
@@ -69,3 +72,14 @@
 "menu.segment.title.settings" = "Ustawienia";
 "menu.segment.title.training" = "Trening";
 "menu.segment.title.result" = "Wyniki";
+
+//MARK: - Exercises
+"exercise.alert.add.title" = "Dodaj ćwiczenie";
+"exercise.alert.edit.title" = "Edytuj ćwiczenie";
+"exercise.alert.error.alreadyExist.message" = "Ćwiczenie już istnieje";
+"exercise.alert.error.noUser.message" = "Brak zalogowanego użytkownika";
+"exercise.alert.error.cannotFind.message" = "Nie udało się znaleźć takiego ćwiczenia";
+"exercise.title" = "Lista ćwiczeń";
+
+//MARK: - Training schemes
+"trainingScheme.title" = "Dodaj schemat treningu";

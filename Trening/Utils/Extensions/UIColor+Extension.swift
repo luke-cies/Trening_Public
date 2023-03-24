@@ -46,6 +46,10 @@ extension UIColor{
         .dynamicColor(lightMode: .lightGray, darkMode: .lightGray)
     }
     
+    static var TTableViewBackground: UIColor{
+        .dynamicColor(lightMode: .TDarkGray, darkMode: .TDarkGray)
+    }
+    
     //MARK: - Public
     static func dynamicColor(lightMode: UIColor, darkMode: UIColor) -> UIColor {
         guard #available(iOS 13.0, *) else { return lightMode }

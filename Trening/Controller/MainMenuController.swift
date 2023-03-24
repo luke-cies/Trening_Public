@@ -12,38 +12,32 @@ class MainMenuController: GradientBaseController{
     //MARK: - Properties
     private var viewModel: MainMenuViewModelProtocol = MainMenuViewModel()
     private lazy var exercisesButton: TButton = {
-        let b = TButton.create("menu.button.exercise".localized)
-        b.fontSize = 20
+        let b = TButton.create("menu.button.exercise".localized, fontSize: Consts.mainMenuButtonFontSize)
         b.addTarget(self, action: #selector(didTapOnMenuButton), for: .touchUpInside)
         return b
     }()
     private lazy var schemesButton: TButton = {
-        let b = TButton.create("menu.button.schemes".localized)
+        let b = TButton.create("menu.button.schemes".localized, fontSize: Consts.mainMenuButtonFontSize)
         b.addTarget(self, action: #selector(didTapOnMenuButton), for: .touchUpInside)
-        b.fontSize = 20
         return b
     }()
     private lazy var trainingButton: TButton = {
-        let b = TButton.create("menu.button.training".localized)
+        let b = TButton.create("menu.button.training".localized, fontSize: Consts.mainMenuButtonFontSize)
         b.addTarget(self, action: #selector(didTapOnMenuButton), for: .touchUpInside)
-        b.fontSize = 20
         return b
     }()
     private lazy var planButton: TButton = {
-        let b = TButton.create("menu.button.plan".localized)
-        b.fontSize = 20
+        let b = TButton.create("menu.button.plan".localized, fontSize: Consts.mainMenuButtonFontSize)
         b.addTarget(self, action: #selector(didTapOnMenuButton), for: .touchUpInside)
         return b
     }()
     private lazy var historyButton: TButton = {
-        let b = TButton.create("menu.button.history".localized)
-        b.fontSize = 20
+        let b = TButton.create("menu.button.history".localized, fontSize: Consts.mainMenuButtonFontSize)
         b.addTarget(self, action: #selector(didTapOnMenuButton), for: .touchUpInside)
         return b
     }()
     private lazy var maxButton: TButton = {
-        let b = TButton.create("menu.button.max".localized)
-        b.fontSize = 20
+        let b = TButton.create("menu.button.max".localized, fontSize: Consts.mainMenuButtonFontSize)
         b.addTarget(self, action: #selector(didTapOnMenuButton), for: .touchUpInside)
         return b
     }()
@@ -59,7 +53,7 @@ class MainMenuController: GradientBaseController{
     private func setupUI(){
         let image = UIImage(systemName: "person.circle.fill")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showProfile))
-        navigationItem.rightBarButtonItem?.tintColor = .TBlack
+        navigationItem.leftBarButtonItem?.tintColor = .TBlack
         
         let settings = MenuComponent(label: "menu.segment.title.settings".localized, components: [exercisesButton, schemesButton])
         let training = MenuComponent(label: "menu.segment.title.training".localized, components: [trainingButton, planButton, historyButton])
@@ -111,6 +105,12 @@ class MainMenuController: GradientBaseController{
         var vc: UIViewController!
         if sender == exercisesButton{
             vc = ExerciseController()
+        }
+        else if sender == schemesButton{
+            vc = TreningSchemesController()
+        }
+        else if sender == historyButton{
+            vc = TrainingHistoryController()
         }
         else{
             print("Dokończ")//TODO: Dokończ

@@ -10,6 +10,9 @@
 "ok" = "OK";
 "cancel" = "Cancel";
 "loading" = "Loading";
+"add" = "Add";
+"done" = "Done";
+"save" = "Save";
 
 //MARK: - Model
 "training.status.todo" = "Ready";
@@ -61,7 +64,7 @@
 
 //MARK: - MainMenu
 "menu.button.exercise" = "Exercises";
-"menu.button.schemes" = "Training schemes";
+"menu.button.schemes" = "Add training scheme";
 "menu.button.training" = "Train";
 "menu.button.plan" = "Plan";
 "menu.button.history" = "History";
@@ -69,3 +72,14 @@
 "menu.segment.title.settings" = "Settings";
 "menu.segment.title.training" = "Training";
 "menu.segment.title.result" = "Results";
+
+//MARK: - Exercises
+"exercise.alert.add.title" = "Add exercise";
+"exercise.alert.edit.title" = "Edit exercise";
+"exercise.alert.error.alreadyExist.message" = "Exercise already exists";
+"exercise.alert.error.noUser.message" = "No logged user";
+"exercise.alert.error.cannotFind.message" = "Cannot find such exercise";
+"exercise.title" = "Exercises list";
+
+//MARK: - Training schemes
+"trainingScheme.title" = "Add training scheme";

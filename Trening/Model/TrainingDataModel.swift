@@ -91,7 +91,7 @@ struct User: Codable{
 
 struct Exercise: Codable{
     var id: String = UUID().uuidString
-    let name: String
+    var name: String
     let userId: String//creator
 }
 

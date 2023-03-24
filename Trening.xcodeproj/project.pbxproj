@@ -47,6 +47,10 @@
 		BCC80CE129BF34730045A274 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC80CE029BF34730045A274 /* CustomTextField.swift */; };
 		BCC80CE329BF3B1B0045A274 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC80CE229BF3B1B0045A274 /* LoginViewModel.swift */; };
 		BCC80CEE29C1AB240045A274 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC80CED29C1AB240045A274 /* Logger.swift */; };
+		BCCC426629CCD0B9006B9C58 /* HeaderMenuViewAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC426529CCD0B9006B9C58 /* HeaderMenuViewAdd.swift */; };
+		BCD9FF8129CCD292008AC95F /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8029CCD292008AC95F /* Consts.swift */; };
+		BCD9FF8329CDA524008AC95F /* TreningSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */; };
+		BCD9FF8529CDAEE2008AC95F /* AddTrainingSchemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */; };
 		FE8F0B044BA63AFBD123E6F2 /* Pods_Trening.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AFBC627CBC07F47AF45821 /* Pods_Trening.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +103,10 @@
 		BCC80CE029BF34730045A274 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		BCC80CE229BF3B1B0045A274 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BCC80CED29C1AB240045A274 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		BCCC426529CCD0B9006B9C58 /* HeaderMenuViewAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderMenuViewAdd.swift; sourceTree = "<group>"; };
+		BCD9FF8029CCD292008AC95F /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
+		BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreningSchemesController.swift; sourceTree = "<group>"; };
+		BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrainingSchemeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +207,7 @@
 				BCB2A6C129CAEBAA003B67B7 /* WaitView.swift */,
 				BCB2A6D529CC50D7003B67B7 /* TButton.swift */,
 				BCB2A6D829CC5637003B67B7 /* MenuComponent.swift */,
+				BCCC426529CCD0B9006B9C58 /* HeaderMenuViewAdd.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -230,6 +239,7 @@
 				BC023B4729B9D93D00C1D1D8 /* Extensions */,
 				BCC80CED29C1AB240045A274 /* Logger.swift */,
 				BCB2A6B629C84308003B67B7 /* GradientBaseController.swift */,
+				BCD9FF8029CCD292008AC95F /* Consts.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -272,6 +282,8 @@
 				BCB2A6AA29C46BD0003B67B7 /* ProfileController.swift */,
 				BCB2A6B829C86564003B67B7 /* RegisterUserController.swift */,
 				BCB2A6D029CC32F3003B67B7 /* ExerciseController.swift */,
+				BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */,
+				BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -418,8 +430,10 @@
 				BCC80CDD29BF209B0045A274 /* UIColor+Extension.swift in Sources */,
 				BCB2A6AD29C46C65003B67B7 /* ProfileHeader.swift in Sources */,
 				BCB2A6C229CAEBAB003B67B7 /* WaitView.swift in Sources */,
+				BCD9FF8129CCD292008AC95F /* Consts.swift in Sources */,
 				BCB2A6B329C4718D003B67B7 /* ProfileFoter.swift in Sources */,
 				BCC80CE329BF3B1B0045A274 /* LoginViewModel.swift in Sources */,
+				BCD9FF8329CDA524008AC95F /* TreningSchemesController.swift in Sources */,
 				BCBE9A7F29BB182E00672DAC /* LoginController.swift in Sources */,
 				BCB2A6A929C45542003B67B7 /* MainMenuViewModel.swift in Sources */,
 				BCB2A6D929CC5638003B67B7 /* MenuComponent.swift in Sources */,
@@ -435,7 +449,9 @@
 				BCC80CD429BB2C000045A274 /* UIViewController+Extension.swift in Sources */,
 				BCB2A6B229C4718D003B67B7 /* ProfileCell.swift in Sources */,
 				BCB2A6A729C44872003B67B7 /* MainMenuController.swift in Sources */,
+				BCCC426629CCD0B9006B9C58 /* HeaderMenuViewAdd.swift in Sources */,
 				BCB2A6BD29C997A0003B67B7 /* AvatarControl.swift in Sources */,
+				BCD9FF8529CDAEE2008AC95F /* AddTrainingSchemeController.swift in Sources */,
 				BCBE9A7D29BB145B00672DAC /* TrainingHistoryController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
