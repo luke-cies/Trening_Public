@@ -82,10 +82,7 @@ class LoginController: GradientBaseController{
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barStyle = .black
         
-        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
-        stack.axis = .vertical
-        stack.spacing = 16
-        
+        let stack = UIStackView(axis: .vertical, spacing: 16, subviews: [emailContainerView, passwordContainerView, loginButton])        
         view.addSubviews(iconImage, stack, dontHaveAccountButton)
         
         iconImage.centerX(inView: view)

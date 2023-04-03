@@ -11,6 +11,21 @@ import UIKit
 enum TrainingMethod: String, Equatable, CaseIterable, Codable{
     case HST
     case FBW
+    
+    var value: Int{
+        switch(self){
+        case .HST: return 0
+        case .FBW: return 1
+        }
+    }
+    
+    static func create(value: Int) -> TrainingMethod{
+        switch(value){
+        case 0: return TrainingMethod(rawValue: "HST")!
+        case 1: return TrainingMethod(rawValue: "FBW")!
+        default: return TrainingMethod(rawValue: "FBW")!
+        }
+    }
 }
 
 enum TrainingType: Int, Codable{
@@ -95,22 +110,85 @@ struct Exercise: Codable{
     let userId: String//creator
 }
 
-struct TrainingScheme: Codable{
+protocol TrainingSchemeProtocol{
+    var id: String {get set}
+    var trainingMethod: TrainingMethod {get set}
+    var name: String {get set}
+    var numberOfWorkouts: Int {get set}
+    var trainingType: TrainingType {get set}
+    var userId: String {get set}//creator
+    var trainingSchemeData: [TrainingSchemeData] {get set}
+    
+    static func numberOfWorkoutsDescription(_ numberOfWorkouts: Int) -> String
+}
+
+struct TrainingScheme: Codable, TrainingSchemeProtocol{
     var id: String = UUID().uuidString
     var trainingMethod: TrainingMethod
     var name: String
     var numberOfWorkouts: Int
-    let trainingType: TrainingType
-    let userId: String//creator
-    var trainingSchemeData: TrainingSchemeData
+    var trainingType: TrainingType
+    var userId: String//creator
+    var trainingSchemeData: [TrainingSchemeData]
+    
+    static func numberOfWorkoutsDescription(_ numberOfWorkouts: Int) -> String{
+        var desc: String = ""
+        switch(numberOfWorkouts){
+        case 1: desc = "trainingScheme.numberOfTrainingsDescription.1".localized
+        case 2...4: desc = "trainingScheme.numberOfTrainingsDescription.2-4".localized
+        case 0: desc = "trainingScheme.numberOfTrainingsDescription.0".localized
+        default:
+            desc = "trainingScheme.numberOfTrainingsDescription.5".localized
+        }
+        
+        return "\(numberOfWorkouts) \(desc)"
+    }
+    
+    init(){
+        trainingMethod = .HST
+        name = String()
+        numberOfWorkouts = 0
+        trainingType = .scheme
+        userId = String()
+        trainingSchemeData = [TrainingSchemeData]()
+    }
+    
+    init(trainingMethod: TrainingMethod, name: String, numberOfWorkouts: Int, trainingType: TrainingType, userId: String, trainingSchemeData: [TrainingSchemeData]){
+        self.trainingMethod = trainingMethod
+        self.name = name
+        self.numberOfWorkouts = numberOfWorkouts
+        self.trainingType = trainingType
+        self.userId = userId
+        self.trainingSchemeData = trainingSchemeData
+    }
 }
 
 struct TrainingSchemeData: Codable{
     var id: String = UUID().uuidString
+    var trainingSchemeId: String
     var exercise: Exercise
     var numberOfSeries: Int
     var weight: Double
     var addWeight: Double //Skok ciężaru
+    var exerciseOrder: Int
+    
+    init(){
+        trainingSchemeId = String()
+        exercise = Exercise(name: String(), userId: String())
+        numberOfSeries = 0
+        weight = 0.0
+        addWeight = 0.0
+        exerciseOrder = 0
+    }
+    
+    init(trainingSchemeId: String, exercise: Exercise, numberOfSeries: Int, weight: Double, addWeight: Double, exerciseOrder: Int){
+        self.trainingSchemeId = trainingSchemeId
+        self.exercise = exercise
+        self.numberOfSeries = numberOfSeries
+        self.weight = weight
+        self.addWeight = addWeight
+        self.exerciseOrder = exerciseOrder
+    }
 }
 
 struct Training: Codable{

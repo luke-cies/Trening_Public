@@ -51,6 +51,14 @@
 		BCD9FF8129CCD292008AC95F /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8029CCD292008AC95F /* Consts.swift */; };
 		BCD9FF8329CDA524008AC95F /* TreningSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */; };
 		BCD9FF8529CDAEE2008AC95F /* AddTrainingSchemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */; };
+		BCD9FF8929D1A6D2008AC95F /* TrainingSchemesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8829D1A6D2008AC95F /* TrainingSchemesViewModel.swift */; };
+		BCD9FF8B29D2BDDA008AC95F /* TrainingSchemesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8A29D2BDDA008AC95F /* TrainingSchemesCell.swift */; };
+		BCD9FF8D29D2BF71008AC95F /* TLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8C29D2BF71008AC95F /* TLabel.swift */; };
+		BCD9FF8F29D41B9D008AC95F /* APIProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF8E29D41B9D008AC95F /* APIProtocols.swift */; };
+		BCD9FF9129D56289008AC95F /* UIStackViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF9029D56288008AC95F /* UIStackViewExtension.swift */; };
+		BCD9FF9329D56CB7008AC95F /* AddTrainingSchemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF9229D56CB7008AC95F /* AddTrainingSchemeCell.swift */; };
+		BCD9FF9729D6BA90008AC95F /* AddTrainingSchemeDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF9629D6BA90008AC95F /* AddTrainingSchemeDataController.swift */; };
+		BCD9FF9929DAFCF7008AC95F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD9FF9829DAFCF7008AC95F /* SearchBar.swift */; };
 		FE8F0B044BA63AFBD123E6F2 /* Pods_Trening.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AFBC627CBC07F47AF45821 /* Pods_Trening.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +115,14 @@
 		BCD9FF8029CCD292008AC95F /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreningSchemesController.swift; sourceTree = "<group>"; };
 		BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrainingSchemeController.swift; sourceTree = "<group>"; };
+		BCD9FF8829D1A6D2008AC95F /* TrainingSchemesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSchemesViewModel.swift; sourceTree = "<group>"; };
+		BCD9FF8A29D2BDDA008AC95F /* TrainingSchemesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSchemesCell.swift; sourceTree = "<group>"; };
+		BCD9FF8C29D2BF71008AC95F /* TLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLabel.swift; sourceTree = "<group>"; };
+		BCD9FF8E29D41B9D008AC95F /* APIProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProtocols.swift; sourceTree = "<group>"; };
+		BCD9FF9029D56288008AC95F /* UIStackViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStackViewExtension.swift; sourceTree = "<group>"; };
+		BCD9FF9229D56CB7008AC95F /* AddTrainingSchemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrainingSchemeCell.swift; sourceTree = "<group>"; };
+		BCD9FF9629D6BA90008AC95F /* AddTrainingSchemeDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrainingSchemeDataController.swift; sourceTree = "<group>"; };
+		BCD9FF9829DAFCF7008AC95F /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +224,8 @@
 				BCB2A6D529CC50D7003B67B7 /* TButton.swift */,
 				BCB2A6D829CC5637003B67B7 /* MenuComponent.swift */,
 				BCCC426529CCD0B9006B9C58 /* HeaderMenuViewAdd.swift */,
+				BCD9FF8C29D2BF71008AC95F /* TLabel.swift */,
+				BCD9FF9829DAFCF7008AC95F /* SearchBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -220,6 +238,7 @@
 				BCB2A6AE29C470A4003B67B7 /* ProfileViewModel.swift */,
 				BCB2A6BA29C994B5003B67B7 /* RegisterUserViewModel.swift */,
 				BCB2A6D229CC40D1003B67B7 /* ExerciseViewModel.swift */,
+				BCD9FF8829D1A6D2008AC95F /* TrainingSchemesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -247,6 +266,7 @@
 		BC023B4729B9D93D00C1D1D8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BCD9FF9029D56288008AC95F /* UIStackViewExtension.swift */,
 				BC023B4829B9D96300C1D1D8 /* String+Extension.swift */,
 				BCBE9A8029BB1C1800672DAC /* UIView+Extension.swift */,
 				BCC80CD329BB2C000045A274 /* UIViewController+Extension.swift */,
@@ -269,6 +289,8 @@
 			children = (
 				BCB2A6B029C4718C003B67B7 /* ProfileCell.swift */,
 				BCB2A6DA29CC6429003B67B7 /* ExerciseCell.swift */,
+				BCD9FF8A29D2BDDA008AC95F /* TrainingSchemesCell.swift */,
+				BCD9FF9229D56CB7008AC95F /* AddTrainingSchemeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -284,6 +306,7 @@
 				BCB2A6D029CC32F3003B67B7 /* ExerciseController.swift */,
 				BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */,
 				BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */,
+				BCD9FF9629D6BA90008AC95F /* AddTrainingSchemeDataController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -291,6 +314,7 @@
 		BCC80CD729BB3EC20045A274 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				BCD9FF8E29D41B9D008AC95F /* APIProtocols.swift */,
 				BCC80CD829BB3EE10045A274 /* Service.swift */,
 			);
 			path = API;
@@ -413,19 +437,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCD9FF8B29D2BDDA008AC95F /* TrainingSchemesCell.swift in Sources */,
 				BCB2A6BB29C994B5003B67B7 /* RegisterUserViewModel.swift in Sources */,
 				BCC80CD629BB3CA70045A274 /* DefaultDataModel.swift in Sources */,
 				BC023B4529B9C7D700C1D1D8 /* TrainingDataModel.swift in Sources */,
 				BC023B1C29B9BE4200C1D1D8 /* ViewController.swift in Sources */,
+				BCD9FF9929DAFCF7008AC95F /* SearchBar.swift in Sources */,
+				BCD9FF8D29D2BF71008AC95F /* TLabel.swift in Sources */,
 				BCB2A6B529C47C35003B67B7 /* Bundle+Extension.swift in Sources */,
 				BC023B1829B9BE4200C1D1D8 /* AppDelegate.swift in Sources */,
 				BCC80CE129BF34730045A274 /* CustomTextField.swift in Sources */,
 				BCC80CDF29BF283A0045A274 /* InputContainerView.swift in Sources */,
 				BCBE9A8129BB1C1800672DAC /* UIView+Extension.swift in Sources */,
+				BCD9FF8929D1A6D2008AC95F /* TrainingSchemesViewModel.swift in Sources */,
 				BCB2A6B929C86564003B67B7 /* RegisterUserController.swift in Sources */,
 				BCC80CD929BB3EE10045A274 /* Service.swift in Sources */,
 				BC023B1A29B9BE4200C1D1D8 /* SceneDelegate.swift in Sources */,
 				BCB2A6D629CC50D7003B67B7 /* TButton.swift in Sources */,
+				BCD9FF9129D56289008AC95F /* UIStackViewExtension.swift in Sources */,
 				BCB2A6D329CC40D1003B67B7 /* ExerciseViewModel.swift in Sources */,
 				BCC80CDD29BF209B0045A274 /* UIColor+Extension.swift in Sources */,
 				BCB2A6AD29C46C65003B67B7 /* ProfileHeader.swift in Sources */,
@@ -435,6 +464,7 @@
 				BCC80CE329BF3B1B0045A274 /* LoginViewModel.swift in Sources */,
 				BCD9FF8329CDA524008AC95F /* TreningSchemesController.swift in Sources */,
 				BCBE9A7F29BB182E00672DAC /* LoginController.swift in Sources */,
+				BCD9FF9329D56CB7008AC95F /* AddTrainingSchemeCell.swift in Sources */,
 				BCB2A6A929C45542003B67B7 /* MainMenuViewModel.swift in Sources */,
 				BCB2A6D929CC5638003B67B7 /* MenuComponent.swift in Sources */,
 				BCB2A6D129CC32F3003B67B7 /* ExerciseController.swift in Sources */,
@@ -444,8 +474,10 @@
 				BCB2A6AB29C46BD0003B67B7 /* ProfileController.swift in Sources */,
 				BCC80CEE29C1AB240045A274 /* Logger.swift in Sources */,
 				BCC80CDB29BB3F800045A274 /* UserDefaults+Extension.swift in Sources */,
+				BCD9FF9729D6BA90008AC95F /* AddTrainingSchemeDataController.swift in Sources */,
 				BCB2A6DB29CC6429003B67B7 /* ExerciseCell.swift in Sources */,
 				BC023B2229B9BE4200C1D1D8 /* Trening.xcdatamodeld in Sources */,
+				BCD9FF8F29D41B9D008AC95F /* APIProtocols.swift in Sources */,
 				BCC80CD429BB2C000045A274 /* UIViewController+Extension.swift in Sources */,
 				BCB2A6B229C4718D003B67B7 /* ProfileCell.swift in Sources */,
 				BCB2A6A729C44872003B67B7 /* MainMenuController.swift in Sources */,

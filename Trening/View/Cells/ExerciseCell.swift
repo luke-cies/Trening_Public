@@ -10,14 +10,7 @@ import UIKit
 
 class ExerciseCell: UITableViewCell{
     //MARK: - Properties
-    private let titleLabel: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 16)
-        l.numberOfLines = 0
-        l.lineBreakMode = .byWordWrapping
-        l.minimumScaleFactor = 0.7
-        return l
-    }()
+    private let titleLabel = TLabel(text: String(), font: .systemFont(ofSize: 16), textColor: .TBlackText)
     var title: String = String(){
         didSet{
             titleLabel.text = title

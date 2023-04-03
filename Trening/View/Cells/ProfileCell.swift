@@ -33,11 +33,7 @@ class ProfileCell: UITableViewCell{
         i.setDimensions(height: 28, width: 28)
         return i
     }()
-    private let titleLabel: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 16)
-        return l
-    }()
+    private let titleLabel = TLabel(text: String(), font: .systemFont(ofSize: 16), textColor: .TBlackText)
     
     //MARK:  - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

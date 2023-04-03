@@ -8,73 +8,6 @@
 import Foundation
 import UIKit
 
-enum UserOperationError: Error{
-    case alreadyExist//create
-    case cannotFind//update
-}
-
-enum ExerciseOperationError: Error{
-    case alreadyExist
-    case cannotFind
-    
-    var description: String{
-        switch(self){
-        case .alreadyExist:
-            return "exercise.alert.error.alreadyExist.message".localized
-        case .cannotFind:
-            return "exercise.alert.error.cannotFind.message".localized
-        }
-    }
-}
-
-enum TrainingSchemeError: Error{
-    
-}
-
-protocol RegistrationCredentialsProtocol{
-    var email: String {get set}
-    var password: String {get set}
-    var firstName: String {get set}
-    var lastName: String {get set}
-    var profileImage: UIImage {get set}
-}
-
-protocol TrainingSchemeCredentialsProtocol{
-    var method: TrainingMethod {get set}
-    var name: String {get set}
-    var numberOfWorkouts: Int {get set}
-    var trainingType: TrainingType {get set}
-    var trainingSchemeData: TrainingSchemeData {get set}
-}
-
-protocol UserApiProtocol{
-    static var users: [User] {get set}
-//    static func fetchUsers(completion: @escaping ([User]) -> Void)
-//    static func fetchUser(withUid uid: String, completion: @escaping (User?) -> Void)
-    static func createUser(credentials: RegistrationCredentialsProtocol, completion: @escaping (UserOperationError?, User?) -> Void)
-    static func updateUser(_ user: User, completion: @escaping (UserOperationError?, User) -> Void)
-    static func loginUser(email: String, password: String, completion: @escaping (Bool) -> Void)
-    static func logoutCurrentUser(completion: @escaping (Bool) -> Void)
-}
-
-protocol ExerciseApiProtocol{
-    static var exercises: [Exercise] {get set}
-    static func createExercise(name: String, user: User, completion: @escaping (ExerciseOperationError?, Exercise?) -> Void)
-//    static func fetchExercises(_ completion: @escaping ([Exercise]) -> Void)
-    static func removeExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void)
-    static func updateExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void)
-}
-
-protocol TrainingSchemesApiProtocol{
-    static var trainingSchemes: [TrainingScheme] {get set}
-    static func addTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void)
-    
-}
-
-protocol TrainingsApiProtocol{
-    static var trainings: [Training] {get set}
-}
-
 struct RegistrationCredentials: RegistrationCredentialsProtocol{
     var email: String
     var password: String
@@ -84,18 +17,28 @@ struct RegistrationCredentials: RegistrationCredentialsProtocol{
 }
 
 struct TrainingSchemeCredentials: TrainingSchemeCredentialsProtocol{
-    var method: TrainingMethod
-    var name: String
+    var trainingMethod: TrainingMethod
+    var name: String = "trainingScheme.add.name".localized
     var numberOfWorkouts: Int
     var trainingType: TrainingType
-    var trainingSchemeData: TrainingSchemeData
+    var trainingSchemeData: [TrainingSchemeDataCredentialsProtocol]
+    var userId: String
 }
+
+struct TrainingSchemeDataCredentials: TrainingSchemeDataCredentialsProtocol{
+    var trainingSchemeId: String
+    var exercise: Exercise
+    var numberOfSeries: Int
+    var weight: Double
+    var addWeight: Double
+//    var exerciseOrder: Int
+}
+
 
 struct Service: UserApiProtocol{
     //MARK: - Properties
     static var users: [User]{
         get{ UserDefaults.users }
-        set{ UserDefaults.users = newValue }
     }
     
 //    static func fetchUsers(completion: @escaping ([User]) -> Void) {
@@ -116,7 +59,7 @@ struct Service: UserApiProtocol{
         let avatarPath = Service.saveAvatarImage(img: credentials.profileImage)
         let codedPass = credentials.password.encode()
         let usr = User(email: credentials.email, firstName: credentials.firstName, lastName: credentials.lastName, password: codedPass, avatarFileName: avatarPath.name)
-        users.append(usr)
+        UserDefaults.users.append(usr)
         Logger.log("New user created: \(usr)")
         completion(nil, usr)
     }
@@ -130,7 +73,7 @@ struct Service: UserApiProtocol{
                 usr.avatarFileName = avatarPath.name
                 usr.password = codedPass
                 usr.passwordChanged = false
-                users[idx] = usr
+                UserDefaults.users[idx] = usr
                 Logger.log("User \(user) updated to \(usr)")
                 completion(nil, usr)
             }
@@ -147,12 +90,12 @@ struct Service: UserApiProtocol{
                 var usr = users[i]
                 if i == idx{
                     usr.isLoggedIn = true
-                    users[i] = usr
+                    UserDefaults.users[i] = usr
                     Logger.log("User: \(usr) Logged in")
                 }
                 else if usr.isLoggedIn == true{
                     usr.isLoggedIn = false
-                    users[i] = usr
+                    UserDefaults.users[i] = usr
                     Logger.log("User: \(usr) Logged out")
                 }
             }
@@ -173,7 +116,7 @@ struct Service: UserApiProtocol{
         }
         var usr = users[idx]
         usr.isLoggedIn = false
-        Service.users[idx] = usr
+        UserDefaults.users[idx] = usr
         completion(true)
         Logger.log("Current user: \(usr) Logged out")
     }
@@ -229,7 +172,6 @@ struct Service: UserApiProtocol{
 extension Service: ExerciseApiProtocol{
     static var exercises: [Exercise]{
         get{ UserDefaults.exercises }
-        set{ UserDefaults.exercises = newValue }
     }
     
     static func createExercise(name: String, user: User, completion: @escaping (ExerciseOperationError?, Exercise?) -> Void){
@@ -239,7 +181,7 @@ extension Service: ExerciseApiProtocol{
             return
         }
         let ex = Exercise(name: name, userId: user.userId)
-        exercises.append(ex)
+        UserDefaults.exercises.append(ex)
         Logger.log("New Exercise created \(ex)")
         completion(nil, ex)
     }
@@ -250,7 +192,7 @@ extension Service: ExerciseApiProtocol{
     
     static func removeExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void) {
         if let idx = exercises.firstIndex(where: { $0.id == exercise.id }){
-            exercises.remove(at: idx)
+            UserDefaults.exercises.remove(at: idx)
             Logger.log("Exercise \(exercise) was removed")
             completion(nil)
         }
@@ -262,7 +204,7 @@ extension Service: ExerciseApiProtocol{
     
     static func updateExercise(_ exercise: Exercise, completion: @escaping (ExerciseOperationError?) -> Void) {
         if let idx = exercises.firstIndex(where: { $0.id == exercise.id }){
-            exercises[idx] = exercise
+            UserDefaults.exercises[idx] = exercise
             Logger.log("Exercise \(exercise) was updated")
             completion(nil)
         }
@@ -275,13 +217,104 @@ extension Service: ExerciseApiProtocol{
 
 //MARK: - TrainingSchemesProtocol
 extension Service: TrainingSchemesApiProtocol{
-    static func addTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void) {
-        
+    static var trainingSchemes: [TrainingScheme]{
+        UserDefaults.trainingSchemes
     }
     
-    static var trainingSchemes: [TrainingScheme]{
-        get{ UserDefaults.trainingSchemes }
-        set{ UserDefaults.trainingSchemes = newValue }
+    static func createTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void) {
+        if let _ = trainingSchemes.first(where: { $0.name == credentials.name && $0.userId == credentials.userId }){
+            Logger.error("Training scheme: \(credentials.name) already exist")
+            completion(.alreadyExist, nil)
+            return
+        }
+        
+        var tr = TrainingScheme(trainingMethod: credentials.trainingMethod, name: credentials.name, numberOfWorkouts: credentials.numberOfWorkouts, trainingType: credentials.trainingType, userId: credentials.userId, trainingSchemeData: [TrainingSchemeData]())
+        
+        var trData = [TrainingSchemeData]()
+        var counter = 0
+        credentials.trainingSchemeData.forEach { dataCedentials in
+            trData.append(TrainingSchemeData(trainingSchemeId: tr.id, exercise: dataCedentials.exercise, numberOfSeries: dataCedentials.numberOfSeries, weight: dataCedentials.weight, addWeight: dataCedentials.addWeight, exerciseOrder: counter))
+            counter += 1
+        }
+        tr.trainingSchemeData = trData
+        
+        UserDefaults.trainingSchemes.append(tr)
+        Logger.log("New Training scheme created \(tr)")
+        completion(nil, tr)
+    }
+    
+    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void) {
+        if let idx = trainingSchemes.firstIndex(where: { $0.id == scheme.id }){
+            UserDefaults.trainingSchemes[idx] = scheme
+            Logger.log("Training scheme \(scheme) was updated")
+            completion(nil)
+        }
+        else{
+            Logger.error("Cannot edit Training scheme because it doesn't exist. \(scheme)")
+            completion(.cannotFind)
+        }
+    }
+    
+    static func removeTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void) {
+        if let idx = trainingSchemes.firstIndex(where: { $0.id == scheme.id }){
+            UserDefaults.trainingSchemes.remove(at: idx)
+            Logger.log("Training scheme \(scheme) was removed")
+            completion(nil)
+        }
+        else{
+            Logger.error("Cannot remove Training scheme because it doesn't exist. \(scheme)")
+            completion(.cannotFind)
+        }
+    }
+    
+    static func createTrainingSchemeData(_ credentials: TrainingSchemeDataCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingSchemeData?) -> Void) {
+        if let schemeIdx = trainingSchemes.firstIndex(where: { $0.id == credentials.trainingSchemeId }){
+            let counter = UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.count
+            let data = TrainingSchemeData(trainingSchemeId: credentials.trainingSchemeId, exercise: credentials.exercise, numberOfSeries: credentials.numberOfSeries, weight: credentials.weight, addWeight: credentials.addWeight, exerciseOrder: counter)
+            UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.append(data)
+            Logger.log("Training scheme data \(data) created")
+            completion(nil, data)
+        }
+        else{
+            Logger.error("Cannot create scheme training data because the Training scheme \(credentials.trainingSchemeId) doesn't exist")
+            completion(.cannotFind, nil)
+        }
+    }
+    
+    static func updateTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void) {
+        if let schemeIdx = trainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
+            if let SchemeDataIdx = trainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
+                UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData[SchemeDataIdx] = data
+                Logger.log("Training scheme data \(data) updated")
+                completion(nil)
+            }
+            else{
+                Logger.error("Cannot find Training Scheme data: \(data) to update")
+                completion(.cannotFindData)
+            }
+        }
+        else{
+            Logger.error("Cannot update Training Scheme data: \(data) because the training Scheme doesn't exist")
+            completion(.cannotFind)
+        }
+    }
+    
+    static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void) {
+        if let schemeIdx = trainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
+            if let SchemeDataIdx = trainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
+                UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.remove(at: SchemeDataIdx)
+                Logger.log("Training scheme data \(data) removed")
+                completion(nil)
+            }
+            else{
+                Logger.error("Cannot find Training Scheme data: \(data) to remove")
+                completion(.cannotFindData)
+            }
+        }
+        else{
+            Logger.error("Cannot remove Training Scheme data: \(data) because the training Scheme doesn't exist")
+            completion(.cannotFind)
+        }
     }
 }
 
@@ -289,7 +322,6 @@ extension Service: TrainingSchemesApiProtocol{
 extension Service: TrainingsApiProtocol{
     static var trainings: [Training]{
         get{ UserDefaults.trainings }
-        set{ UserDefaults.trainings = newValue }
     }
 }
 

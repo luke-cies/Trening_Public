@@ -22,7 +22,12 @@ class ExerciseController: GradientBaseController{
         t.autoresizingMask = [.flexibleHeight]
         return t
     }()
+    private lazy var searchBar = SearchBar(placeholder: "search".localized) {[weak self] searchText in
+        self?.viewModel.searchText = searchText
+        self?.tableView.reloadData()
+    }
     private var viewModel: ExerciseViewModelProtocol = ExerciseViewModel()
+    var selectionCompletion: ((Exercise) -> Void)? = nil
     
     //MARK: - Init
     override func viewDidLoad() {
@@ -36,12 +41,14 @@ class ExerciseController: GradientBaseController{
             self?.showExerciseAlertView(forData: nil)
         }
         headerView.title = "exercise.title".localized
+        headerView.buttonText = "add".localized
         
-        view.addSubviews(headerView)
-        headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
+        view.addSubviews(headerView, searchBar)
+        headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: Consts.mainMenuHeight)
+        searchBar.anchor(top: headerView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor)
         
         view.addSubviews(tableView)
-        tableView.anchor(top: headerView.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
+        tableView.anchor(top: searchBar.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
     }
     
     //MARK: - Private
@@ -91,7 +98,7 @@ extension ExerciseController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return selectionCompletion == nil
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -109,7 +116,13 @@ extension ExerciseController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.exercises[indexPath.row]
-        showExerciseAlertView(forData: data)
+        
+        if let selectionCompletion = selectionCompletion{
+            selectionCompletion(data)
+        }
+        else{
+            showExerciseAlertView(forData: data)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

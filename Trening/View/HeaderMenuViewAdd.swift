@@ -13,16 +13,14 @@ class HeaderMenuViewAdd: UIView{
     private var addButton = TButton.create("add".localized)
     private var label: UILabel = UILabel(frame: .zero)
     var addButtonTappedCompletion: (() -> Void)!
-    var buttonText: String? = String(){
+    lazy var buttonText: String? = String(){
         didSet{
-            addButton.isHidden = buttonText == nil || buttonText == ""
-            
+            addButton.isHidden = (buttonText == nil || buttonText == "")
             if let buttonText = buttonText{
                 addButton.title = buttonText
             }
             else{
                 addButton.title = ""
-                addButton.isHidden = true
             }
         }
     }
@@ -59,15 +57,12 @@ class HeaderMenuViewAdd: UIView{
         label.font = .boldSystemFont(ofSize: Consts.titleFontSize)
         label.textColor = .TBlackText
         
-        let stack = UIStackView(arrangedSubviews: [label, addButton])
-        stack.axis = .horizontal
-        stack.spacing = 5
-        
+        let stack = UIStackView(axis: .horizontal, spacing: 5, subviews: [label, addButton])        
         addButton.setWidth(width: 90)
         addButton.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         
         addSubviews(line, stack)
-        stack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 25, paddingRight: 10)
+        stack.anchor(top: topAnchor, left: leftAnchor, /*bottom: bottomAnchor,*/right: rightAnchor, paddingTop: 5, paddingLeft: 10, /*paddingBottom: 25,*/ paddingRight: 10)
         line.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 15, height: 1)
     }
     

@@ -12,13 +12,13 @@ class CustomTextField: UITextField{
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(placeholder: String){
+    init(placeholder: String, textColor: UIColor = .TBlackText){
         super.init(frame: .zero)
         
         borderStyle = .none
         font = UIFont.systemFont(ofSize: 16)
-        textColor = .white
-        keyboardAppearance = .dark
+        self.textColor = textColor
+        keyboardAppearance = .default
         attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
     }
 }

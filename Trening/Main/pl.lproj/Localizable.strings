@@ -13,6 +13,7 @@
 "add" = "Dodaj";
 "done" = "Gotowe";
 "save" = "Zapisz";
+"search" = "Wyszukaj";
 
 //MARK: - Model
 "training.status.todo" = "Przygotowany";
@@ -64,7 +65,7 @@
 
 //MARK: - MainMenu
 "menu.button.exercise" = "Lista Ćwiczeń";//Exercise
-"menu.button.schemes" = "Dodaj schemat treningu";
+"menu.button.schemes" = "Schematy treningu";
 "menu.button.training" = "Wykonaj trening";
 "menu.button.plan" = "Planuj";
 "menu.button.history" = "Historia";
@@ -82,4 +83,34 @@
 "exercise.title" = "Lista ćwiczeń";
 
 //MARK: - Training schemes
-"trainingScheme.title" = "Dodaj schemat treningu";
+"trainingScheme.title" = "Schematy treningu";
+"trainingScheme.alert.error.alreadyExist.message" = "Schemat treningu juć istnieje";
+"trainingScheme.alert.error.cannotFind.message" = "Nie moćna znaleźć takiego schematu treningu";
+"trainingScheme.alert.error.cannotFindData.message" = "Nie moćna znaleźć takiego ćwiczenia w schemacie treningu";
+"trainingScheme.numberOfTrainingsDescription.0" = "treningów";
+"trainingScheme.numberOfTrainingsDescription.1" = "trening";
+"trainingScheme.numberOfTrainingsDescription.2-4" = "treningi";
+"trainingScheme.numberOfTrainingsDescription.5" = "treningów";
+"trainingScheme.add.title" = "Dodaj schemat";
+"trainingScheme.add.name" = "Nazwa schematu";
+"trainingScheme.add.numberOfTrainings" = "Ilość";
+"trainingScheme.add.typeLabel" = "Typ";
+"trainingScheme.add.nameLabel" = "Nazwa";
+"trainingScheme.add.numberOfTrainingsLabel" = "Ilość treningów";
+"trainingScheme.add.numberOfTrainingsLabel.hst" = "Ilość treningów w cyklu";
+"trainingScheme.add.exercises.title" = "Ćwiczenia:";
+"trainingScheme.add.error.numberOfTrainings" = "Nieprawidłowa wartość w polu 'Ilość treningów'";
+"trainingScheme.add.tableViewCell.NumberOfSeries" = "Serie:";
+"trainingScheme.add.tableViewCell.weight" = "Ciężar / Skok ciężaru:";
+"trainingScheme.add.data.exercise" = "Ćwiczenie:";
+"trainingScheme.add.data.exercise.change" = "Wybierz / Zmień";
+"trainingScheme.add.data.numberOfSeries" = "Ilość serii:";
+"trainingScheme.add.data.numberOfSeries.placeholder" = "Wpisz";
+"trainingScheme.add.data.weight" = "Ciężar:";
+"trainingScheme.add.data.weight.placeholder" = "Wpisz";
+"trainingScheme.add.data.addWeight" = "Skok ciężaru:";
+"trainingScheme.add.data.addWeight.placeholder" = "Wpisz";
+"trainingScheme.add.data.error.numberOfSeries" = "Nieprawidłowa wartość w polu 'Ilość serii'";
+"trainingScheme.add.data.error.weight" = "Nieprawidłowa wartość w polu 'Ciężar'";
+"trainingScheme.add.data.error.addWeight" = "Nieprawidłowa wartość w polu 'Skok ciężaru'";
+"trainingScheme.add.data.error.exercise" = "Brak ćwiczenia";

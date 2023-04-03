@@ -10,13 +10,7 @@ import UIKit
 
 class MenuComponent: UIView{
     //MARK: - Properties
-    private var lbl: UILabel = {
-        let l = UILabel(frame: .zero)
-        l.font = .boldSystemFont(ofSize: 20)
-        l.textColor = .TBlackText
-        l.textAlignment = .left
-        return l
-    }()
+    private var lbl = TLabel(text: String(), font: .boldSystemFont(ofSize: 20), textColor: .TBlackText, textAlignment: .left)
     
     //MARK: - Init
     init(label: String, components: [UIControl]){
@@ -36,15 +30,12 @@ class MenuComponent: UIView{
         let line = UIView()
         line.backgroundColor = .TLineGray
         
+        lbl.textAlignment = .left
         addSubviews(lbl, line)
         lbl.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: 25)
         line.anchor(top: lbl.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 3, paddingLeft: 20, height: 1)
         
-        let stack = UIStackView(arrangedSubviews: components)
-        stack.axis = .vertical
-        stack.alignment = .fill
-        stack.distribution = .fillEqually
-        stack.spacing = 5
+        let stack = UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 5, subviews: components)
         addSubviews(stack)
         stack.anchor(top: lbl.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20)
     }

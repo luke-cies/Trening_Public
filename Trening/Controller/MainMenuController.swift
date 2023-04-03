@@ -60,10 +60,7 @@ class MainMenuController: GradientBaseController{
         let results = MenuComponent(label: "menu.segment.title.result".localized, components: [maxButton])
         let emptyView = UIView()
         
-        let stack = UIStackView(arrangedSubviews: [settings, training, results, emptyView])
-        stack.axis = .vertical
-        stack.spacing = 40
-        
+        let stack = UIStackView(axis: .vertical, spacing: 40, subviews: [settings, training, results, emptyView])        
         view.addSubviews(stack)
         stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 30, paddingBottom: 50, paddingRight: 30)
     }

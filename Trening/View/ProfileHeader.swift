@@ -37,13 +37,7 @@ class ProfileHeader: UIView{
         i.layer.borderWidth = 4.0
         return i
     }()
-    private let fullnameLabel: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 20)
-        l.textColor = .white
-        l.textAlignment = .center
-        return l
-    }()
+    private let fullnameLabel = TLabel(text: String(), font: .systemFont(ofSize: 20), textColor: .white, textAlignment: .center)
     
     
     //MARK: - Init

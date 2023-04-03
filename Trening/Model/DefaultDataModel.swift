@@ -13,6 +13,20 @@ struct DefaultDataModel{
         if UserDefaults.isFirstRun {
             DefaultDataModel.createDefaultUser()
         }
+        
+//        if let userId = Service.loggedInUser()?.userId, let ex = Service.exercises.first {
+//            var data = [TrainingSchemeDataCredentials(exercise: ex, numberOfSeries: 3, weight: 120, addWeight: 2.5, exerciseOrder: 0)]
+//            
+//            if let ex2 = Service.exercises.last{
+//                data.append(TrainingSchemeDataCredentials(exercise: ex2, numberOfSeries: 2, weight: 100, addWeight: 5.0, exerciseOrder: 1))
+//            }
+//
+//            let c = TrainingSchemeCredentials(method: .FBW, name: "Mój schemat treningu", numberOfWorkouts: 12, trainingType: .scheme, trainingSchemeData: data, userId: userId)
+//            Service.createTrainingScheme(c) { err, scheme in
+//                print(err)
+//                print(scheme)
+//            }
+//        }
     }
     
     static func initDefaultData(){

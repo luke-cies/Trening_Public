@@ -15,7 +15,7 @@ extension String {
     }
     
     
-    func getBoldAtributedString(highlightedTextsArray: [String]) -> NSAttributedString{
+    func getBoldAtributedString(highlightedTextsArray: [String], fontSize: CGFloat) -> NSAttributedString{
         let mutString: NSMutableString = NSMutableString(string: self)
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: self)
         
@@ -25,7 +25,7 @@ extension String {
                 continue
             }
             
-            let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)]
+            let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: fontSize)]
             let boldAttrText = NSMutableAttributedString(string: bText, attributes: attrs)
             
             attributedString.replaceCharacters(in: range, with: boldAttrText)
@@ -45,4 +45,25 @@ extension String {
         let hashed = SHA256.hash(data: data)
         return hashed.description
     }
+
+//    var containsOnlyDigits: Bool {
+//        let notDigits = NSCharacterSet.decimalDigits.inverted
+//        return rangeOfCharacter(from: notDigits, options: String.CompareOptions.literal, range: nil) == nil
+//    }
+//
+//    var containsOnlyLetters: Bool {
+//        let notLetters = NSCharacterSet.letters.inverted
+//        return rangeOfCharacter(from: notLetters, options: String.CompareOptions.literal, range: nil) == nil
+//    }
+//
+//    var isAlphanumeric: Bool {
+//        let notAlphanumeric = NSCharacterSet.decimalDigits.union(NSCharacterSet.letters).inverted
+//        return rangeOfCharacter(from: notAlphanumeric, options: String.CompareOptions.literal, range: nil) == nil
+//    }
+}
+
+extension StringProtocol {
+    var double: Double? { Double(self) }
+    var float: Float? { Float(self) }
+    var integer: Int? { Int(self) }
 }

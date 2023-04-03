@@ -13,6 +13,7 @@
 "add" = "Add";
 "done" = "Done";
 "save" = "Save";
+"search" = "Search";
 
 //MARK: - Model
 "training.status.todo" = "Ready";
@@ -64,7 +65,7 @@
 
 //MARK: - MainMenu
 "menu.button.exercise" = "Exercises";
-"menu.button.schemes" = "Add training scheme";
+"menu.button.schemes" = "Training schemes";
 "menu.button.training" = "Train";
 "menu.button.plan" = "Plan";
 "menu.button.history" = "History";
@@ -82,4 +83,34 @@
 "exercise.title" = "Exercises list";
 
 //MARK: - Training schemes
-"trainingScheme.title" = "Add training scheme";
+"trainingScheme.title" = "Training schemes";
+"trainingScheme.alert.error.alreadyExist.message" = "Training scheme already exists";
+"trainingScheme.alert.error.cannotFind.message" = "Cannot find such training scheme";
+"trainingScheme.alert.error.cannotFindData.message" = "Cannot find such exercise in the training scheme";
+"trainingScheme.numberOfTrainingsDescription.0" = "trainings";
+"trainingScheme.numberOfTrainingsDescription.1" = "training";
+"trainingScheme.numberOfTrainingsDescription.2-4" = "trainings";
+"trainingScheme.numberOfTrainingsDescription.5" = "trainings";
+"trainingScheme.add.title" = "Add scheme";
+"trainingScheme.add.name" = "Scheme name";
+"trainingScheme.add.numberOfTrainings" = "Trainings #";
+"trainingScheme.add.typeLabel" = "Type";
+"trainingScheme.add.nameLabel" = "Name";
+"trainingScheme.add.numberOfTrainingsLabel" = "Number of trainings";
+"trainingScheme.add.numberOfTrainingsLabel.hst" = "Number of trainings in the cycle";
+"trainingScheme.add.exercises.title" = "Exercises:";
+"trainingScheme.add.tableViewCell.NumberOfSeries" = "Series:";
+"trainingScheme.add.tableViewCell.weight" = "Weight / Add weight:";
+"trainingScheme.add.error.numberOfTrainings" = "Wrong value in 'Number of trainings'";
+"trainingScheme.add.data.exercise" = "Exercise:";
+"trainingScheme.add.data.exercise.change" = "Choose / Change";
+"trainingScheme.add.data.numberOfSeries" = "Number of series:";
+"trainingScheme.add.data.numberOfSeries.placeholder" = "Write";
+"trainingScheme.add.data.weight" = "Weight:";
+"trainingScheme.add.data.weight.placeholder" = "Write";
+"trainingScheme.add.data.addWeight" = "Add weight:";
+"trainingScheme.add.data.addWeight.placeholder" = "Write";
+"trainingScheme.add.data.error.numberOfSeries" = "Wrong value in 'Number of series'";
+"trainingScheme.add.data.error.weight" = "Wrong value in 'Weight'";
+"trainingScheme.add.data.error.addWeight" = "Wrong value in 'Add weight'";
+"trainingScheme.add.data.error.exercise" = "No Exercise";

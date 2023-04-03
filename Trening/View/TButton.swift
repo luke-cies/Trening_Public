@@ -46,6 +46,13 @@ class TButton: UIControl{
         return b
     }
     
+    //MARK: - Public
+    override var isEnabled: Bool{
+        didSet{
+            lbl.textColor = isEnabled == true ? .white : .gray
+        }
+    }
+    
     //MARK: - UI
     private func setupUI(){
         backgroundColor = .TButtonGray
