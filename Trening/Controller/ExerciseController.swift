@@ -59,20 +59,22 @@ class ExerciseController: GradientBaseController{
                            text: data?.name) {[weak self] exerciseName in
             if var data = data{
                 data.name = exerciseName
-                self?.viewModel.updateExercise(data, completion: { errMessage in
+                self?.viewModel.updateExercise(data, completion: {[weak self] errMessage in
                     if let errMessage = errMessage{
                         self?.showError(errMessage)
                         return
                     }
+                    self?.viewModel.reloadExercises()
                     self?.tableView.reloadData()
                 })
             }
             else{
-                self?.viewModel.createExercise(exerciseName, completion: { errMessage in
+                self?.viewModel.createExercise(exerciseName, completion: {[weak self] errMessage in
                     if let errMessage = errMessage{
                         self?.showError(errMessage)
                         return
                     }
+                    self?.viewModel.reloadExercises()
                     self?.tableView.reloadData()
                 })
             }
@@ -109,6 +111,7 @@ extension ExerciseController: UITableViewDelegate, UITableViewDataSource{
                     self?.showError(errMessage)
                     return
                 }
+                self?.viewModel.reloadExercises()
                 self?.tableView.reloadData()
             }
         }
