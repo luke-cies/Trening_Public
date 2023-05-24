@@ -127,7 +127,7 @@ struct TrainingScheme: Codable, TrainingSchemeProtocol{
     var trainingMethod: TrainingMethod
     var name: String
     var numberOfWorkouts: Int
-    var trainingType: TrainingType
+    var trainingType: TrainingType//scheme, plan
     var userId: String//creator
     var trainingSchemeData: [TrainingSchemeData]
     

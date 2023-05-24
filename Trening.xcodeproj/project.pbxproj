@@ -17,6 +17,9 @@
 		BC023B3A29B9C03500C1D1D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC023B3C29B9C03500C1D1D8 /* Localizable.strings */; };
 		BC023B4529B9C7D700C1D1D8 /* TrainingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC023B4429B9C7D700C1D1D8 /* TrainingDataModel.swift */; };
 		BC023B4929B9D96300C1D1D8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC023B4829B9D96300C1D1D8 /* String+Extension.swift */; };
+		BC662EE62A1CC52200E5B2F8 /* PlannedTrainingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC662EE52A1CC52200E5B2F8 /* PlannedTrainingList.swift */; };
+		BC662EE82A1CC9B900E5B2F8 /* PlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC662EE72A1CC9B900E5B2F8 /* PlanViewModel.swift */; };
+		BC662EED2A1DEF3400E5B2F8 /* AddPlannedTrainingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC662EEC2A1DEF3400E5B2F8 /* AddPlannedTrainingController.swift */; };
 		BCB2A6A729C44872003B67B7 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6A629C44872003B67B7 /* MainMenuController.swift */; };
 		BCB2A6A929C45542003B67B7 /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6A829C45542003B67B7 /* MainMenuViewModel.swift */; };
 		BCB2A6AB29C46BD0003B67B7 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6AA29C46BD0003B67B7 /* ProfileController.swift */; };
@@ -81,6 +84,9 @@
 		BC023B4029B9C08E00C1D1D8 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BC023B4429B9C7D700C1D1D8 /* TrainingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingDataModel.swift; sourceTree = "<group>"; };
 		BC023B4829B9D96300C1D1D8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		BC662EE52A1CC52200E5B2F8 /* PlannedTrainingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedTrainingList.swift; sourceTree = "<group>"; };
+		BC662EE72A1CC9B900E5B2F8 /* PlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewModel.swift; sourceTree = "<group>"; };
+		BC662EEC2A1DEF3400E5B2F8 /* AddPlannedTrainingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlannedTrainingController.swift; sourceTree = "<group>"; };
 		BCB2A6A629C44872003B67B7 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		BCB2A6A829C45542003B67B7 /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		BCB2A6AA29C46BD0003B67B7 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
@@ -215,8 +221,8 @@
 			isa = PBXGroup;
 			children = (
 				BCB2A6D729CC5188003B67B7 /* Cells */,
-				BCC80CDE29BF28390045A274 /* InputContainerView.swift */,
 				BCC80CE029BF34730045A274 /* CustomTextField.swift */,
+				BCC80CDE29BF28390045A274 /* InputContainerView.swift */,
 				BCB2A6AC29C46C65003B67B7 /* ProfileHeader.swift */,
 				BCB2A6B129C4718C003B67B7 /* ProfileFoter.swift */,
 				BCB2A6BC29C997A0003B67B7 /* AvatarControl.swift */,
@@ -239,6 +245,7 @@
 				BCB2A6BA29C994B5003B67B7 /* RegisterUserViewModel.swift */,
 				BCB2A6D229CC40D1003B67B7 /* ExerciseViewModel.swift */,
 				BCD9FF8829D1A6D2008AC95F /* TrainingSchemesViewModel.swift */,
+				BC662EE72A1CC9B900E5B2F8 /* PlanViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -307,6 +314,8 @@
 				BCD9FF8229CDA524008AC95F /* TreningSchemesController.swift */,
 				BCD9FF8429CDAEE2008AC95F /* AddTrainingSchemeController.swift */,
 				BCD9FF9629D6BA90008AC95F /* AddTrainingSchemeDataController.swift */,
+				BC662EE52A1CC52200E5B2F8 /* PlannedTrainingList.swift */,
+				BC662EEC2A1DEF3400E5B2F8 /* AddPlannedTrainingController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -457,6 +466,7 @@
 				BCD9FF9129D56289008AC95F /* UIStackViewExtension.swift in Sources */,
 				BCB2A6D329CC40D1003B67B7 /* ExerciseViewModel.swift in Sources */,
 				BCC80CDD29BF209B0045A274 /* UIColor+Extension.swift in Sources */,
+				BC662EED2A1DEF3400E5B2F8 /* AddPlannedTrainingController.swift in Sources */,
 				BCB2A6AD29C46C65003B67B7 /* ProfileHeader.swift in Sources */,
 				BCB2A6C229CAEBAB003B67B7 /* WaitView.swift in Sources */,
 				BCD9FF8129CCD292008AC95F /* Consts.swift in Sources */,
@@ -479,12 +489,14 @@
 				BC023B2229B9BE4200C1D1D8 /* Trening.xcdatamodeld in Sources */,
 				BCD9FF8F29D41B9D008AC95F /* APIProtocols.swift in Sources */,
 				BCC80CD429BB2C000045A274 /* UIViewController+Extension.swift in Sources */,
+				BC662EE62A1CC52200E5B2F8 /* PlannedTrainingList.swift in Sources */,
 				BCB2A6B229C4718D003B67B7 /* ProfileCell.swift in Sources */,
 				BCB2A6A729C44872003B67B7 /* MainMenuController.swift in Sources */,
 				BCCC426629CCD0B9006B9C58 /* HeaderMenuViewAdd.swift in Sources */,
 				BCB2A6BD29C997A0003B67B7 /* AvatarControl.swift in Sources */,
 				BCD9FF8529CDAEE2008AC95F /* AddTrainingSchemeController.swift in Sources */,
 				BCBE9A7D29BB145B00672DAC /* TrainingHistoryController.swift in Sources */,
+				BC662EE82A1CC9B900E5B2F8 /* PlanViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

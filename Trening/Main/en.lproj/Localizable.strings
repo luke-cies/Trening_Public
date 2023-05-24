@@ -114,3 +114,6 @@
 "trainingScheme.add.data.error.weight" = "Wrong value in 'Weight'";
 "trainingScheme.add.data.error.addWeight" = "Wrong value in 'Add weight'";
 "trainingScheme.add.data.error.exercise" = "No Exercise";
+
+//MARK: - Plan Training
+"plan.list.title" = "Planned trainings list";

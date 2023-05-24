@@ -114,3 +114,6 @@
 "trainingScheme.add.data.error.weight" = "Nieprawidłowa wartość w polu 'Ciężar'";
 "trainingScheme.add.data.error.addWeight" = "Nieprawidłowa wartość w polu 'Skok ciężaru'";
 "trainingScheme.add.data.error.exercise" = "Brak ćwiczenia";
+
+//MARK: - Plan Training
+"plan.list.title" = "Lista treningów";
