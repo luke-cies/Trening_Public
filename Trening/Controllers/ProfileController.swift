@@ -98,7 +98,7 @@ extension ProfileController: ProfileHeaderDelegate{
 //MARK: - ProfileFooterDelegate
 extension ProfileController: ProfileFooterDelegate{
     func handleLogout() {
-        let alert = UIAlertController(title: nil, message: "login.loggingOut.title".localized, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: "login.loggingOut.title".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "login.loggingOut".localized, style: .destructive, handler: { _ in
             self.dismiss(animated: true)
             self.delegate?.handleLogout()

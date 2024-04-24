@@ -46,6 +46,10 @@ class MainMenuController: GradientBaseController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         authenticateUser()
     }
     

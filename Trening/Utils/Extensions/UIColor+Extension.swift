@@ -30,6 +30,10 @@ extension UIColor{
         .dynamicColor(lightMode: .darkGray, darkMode: .darkGray)
     }
     
+    static var TDarkGrayText: UIColor{
+        .dynamicColor(lightMode: .darkGray, darkMode: .darkGray)
+    }
+    
     static var TButtonGray: UIColor{
         .dynamicColor(lightMode: .color(55, 55, 55, 1), darkMode: .color(55, 55, 55, 1))
     }

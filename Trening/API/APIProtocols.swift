@@ -87,7 +87,7 @@ protocol TrainingSchemesApiProtocol{
     static var trainingSchemes: [TrainingScheme] {get}
     static func createTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void)
     static func removeTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void)
-    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void)
+    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: ((TrainingSchemeError?) -> Void)?)
     
     static func createTrainingSchemeData(_ credentials: TrainingSchemeDataCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingSchemeData?) -> Void)
     static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void)

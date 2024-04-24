@@ -243,15 +243,15 @@ extension Service: TrainingSchemesApiProtocol{
         completion(nil, tr)
     }
     
-    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void) {
+    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: ((TrainingSchemeError?) -> Void)?) {
         if let idx = trainingSchemes.firstIndex(where: { $0.id == scheme.id }){
             UserDefaults.trainingSchemes[idx] = scheme
             Logger.log("Training scheme \(scheme) was updated")
-            completion(nil)
+            completion?(nil)
         }
         else{
             Logger.error("Cannot edit Training scheme because it doesn't exist. \(scheme)")
-            completion(.cannotFind)
+            completion?(.cannotFind)
         }
     }
     

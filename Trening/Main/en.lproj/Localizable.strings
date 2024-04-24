@@ -14,6 +14,7 @@
 "done" = "Done";
 "save" = "Save";
 "search" = "Search";
+"sort" = "Sort";
 
 //MARK: - Model
 "training.status.todo" = "Ready";
@@ -53,6 +54,7 @@
 "account.info" = "About";
 "account.settings" = "Settings";
 "account.info.appVersion" = "Application version:";
+"account.info.logOut" = "Log out";
 
 //MARK: - Default Exercises
 "exercise.name.deadLift" = "DEAD LIFT";

@@ -181,13 +181,12 @@
 		BC023B1629B9BE4200C1D1D8 /* Trening */ = {
 			isa = PBXGroup;
 			children = (
-				BCB2A6D429CC4507003B67B7 /* New Group */,
 				BC023B2E29B9BEB800C1D1D8 /* Database */,
 				BC023B2F29B9BECE00C1D1D8 /* Main */,
-				BC023B4129B9C0DC00C1D1D8 /* View */,
-				BCBE9A7B29BB10B100672DAC /* Controller */,
-				BC023B4229B9C75E00C1D1D8 /* ViewModel */,
-				BC023B4329B9C76400C1D1D8 /* Model */,
+				BC023B4129B9C0DC00C1D1D8 /* Views */,
+				BCBE9A7B29BB10B100672DAC /* Controllers */,
+				BC023B4229B9C75E00C1D1D8 /* ViewModels */,
+				BC023B4329B9C76400C1D1D8 /* Models */,
 				BCC80CD729BB3EC20045A274 /* API */,
 				BC023B4629B9D90500C1D1D8 /* Utils */,
 				BC023B2829B9BE4400C1D1D8 /* Info.plist */,
@@ -217,7 +216,7 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		BC023B4129B9C0DC00C1D1D8 /* View */ = {
+		BC023B4129B9C0DC00C1D1D8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				BCB2A6D729CC5188003B67B7 /* Cells */,
@@ -233,10 +232,10 @@
 				BCD9FF8C29D2BF71008AC95F /* TLabel.swift */,
 				BCD9FF9829DAFCF7008AC95F /* SearchBar.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		BC023B4229B9C75E00C1D1D8 /* ViewModel */ = {
+		BC023B4229B9C75E00C1D1D8 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				BCC80CE229BF3B1B0045A274 /* LoginViewModel.swift */,
@@ -247,16 +246,16 @@
 				BCD9FF8829D1A6D2008AC95F /* TrainingSchemesViewModel.swift */,
 				BC662EE72A1CC9B900E5B2F8 /* PlanViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		BC023B4329B9C76400C1D1D8 /* Model */ = {
+		BC023B4329B9C76400C1D1D8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				BC023B4429B9C7D700C1D1D8 /* TrainingDataModel.swift */,
 				BCC80CD529BB3CA70045A274 /* DefaultDataModel.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		BC023B4629B9D90500C1D1D8 /* Utils */ = {
@@ -284,13 +283,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		BCB2A6D429CC4507003B67B7 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		BCB2A6D729CC5188003B67B7 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,7 +294,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		BCBE9A7B29BB10B100672DAC /* Controller */ = {
+		BCBE9A7B29BB10B100672DAC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				BCBE9A7C29BB145B00672DAC /* TrainingHistoryController.swift */,
@@ -317,7 +309,7 @@
 				BC662EE52A1CC52200E5B2F8 /* PlannedTrainingList.swift */,
 				BC662EEC2A1DEF3400E5B2F8 /* AddPlannedTrainingController.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		BCC80CD729BB3EC20045A274 /* API */ = {
@@ -663,7 +655,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -677,7 +671,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -695,7 +689,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -709,7 +705,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

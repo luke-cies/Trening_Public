@@ -31,13 +31,8 @@ class LoginController: GradientBaseController{
     private lazy var passwordContainerView: InputContainerView = {
         return InputContainerView(image: UIImage(named: "Login/lock"), textField: passwordTextField)
     }()
-    private lazy var loginButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.setTitle("login.loginButton.title".localized, for: .normal)
-        b.layer.cornerRadius = 5
-        b.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        b.backgroundColor = .TButtonGray
-        b.setTitleColor(.white, for: .normal)
+    private lazy var loginButton: TButton = {
+        let b = TButton.create("login.loginButton.title".localized, fontSize: 18)
         b.setHeight(height: 50)
         b.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return b
@@ -58,14 +53,16 @@ class LoginController: GradientBaseController{
         let button = UIButton(type: .system)
         let attributedTitle = NSMutableAttributedString(string: "\("login.register.label".localized)   ",
                                                         attributes: [.font: UIFont.systemFont(ofSize: 16),
-                                                                     .foregroundColor: UIColor.white])
+                                                                     .foregroundColor: UIColor.TDarkGrayText])
         attributedTitle.append(NSAttributedString(string: "login.register.signUp".localized, attributes: [.font: UIFont.boldSystemFont(ofSize: 16),
-                                                                                  .foregroundColor: UIColor.white]))
+                                                                                  .foregroundColor: UIColor.TDarkGrayText]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
+        button.setTitleColor(.TButtonGray, for: .normal)
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
     }()
+    private var registerController: RegisterUserController!
     private var viewModel: LoginViewModelProtocol = LoginViewModel()
     
     //MARK: - Init
@@ -102,10 +99,10 @@ class LoginController: GradientBaseController{
     
     //MARK: - Events
     @objc func handleShowSignUp(){
-        let vc = RegisterUserController()
-        vc.delegate = self
-        vc.editMode = false
-        navigationController?.pushViewController(vc, animated: true)
+        registerController = RegisterUserController()
+        registerController.delegate = self
+        registerController.editMode = false
+        navigationController?.pushViewController(registerController, animated: true)
     }
     
     @objc func textDidChanged(sender: UITextField){

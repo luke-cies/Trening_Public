@@ -15,7 +15,7 @@ class ProfileFoter: UIView{
     //MARK: - Properties
     private lazy var logoutButon: UIButton = {
         let b = UIButton(type: .system)
-        b.setTitle("LogOut", for: .normal)
+        b.setTitle("account.info.logOut".localized, for: .normal)
         b.setTitleColor(.white, for: .normal)
         b.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         b.backgroundColor = .TButtonGray
