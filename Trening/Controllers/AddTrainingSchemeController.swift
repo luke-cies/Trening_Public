@@ -40,10 +40,11 @@ class AddTrainingSchemeController: GradientBaseController{
     private lazy var exercisesHeaderView: UIView = {
         let v = UIView(frame: .zero)
         let titleLabel = TLabel(text: "trainingScheme.add.exercises.title".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
-        let stack = UIStackView(axis: .horizontal, spacing: 10, subviews: [titleLabel, addButton])
+        let stack = UIStackView(axis: .horizontal, spacing: 10, subviews: [titleLabel, sortButton, addButton])
         v.addSubviews(stack)
         stack.pinToEdges(of: v)
         addButton.setWidth(width: 80)
+        sortButton.setWidth(width: 80)
         return v
     }()
     private lazy var addButton: TButton = {
@@ -52,6 +53,13 @@ class AddTrainingSchemeController: GradientBaseController{
         addButton.addTarget(self, action: #selector(didTapOnAddButton), for: .touchUpInside)
         
         return addButton
+    }()
+    private lazy var sortButton: TButton = {
+        let b = TButton.create("sort".localized)
+        b.isEnabled = false
+        b.addTarget(self, action: #selector(didTapOnSortButton), for: .touchUpInside)
+        
+        return b
     }()
     private lazy var tableView: UITableView = {
         let t = UITableView(frame: .zero)
@@ -63,12 +71,14 @@ class AddTrainingSchemeController: GradientBaseController{
         t.separatorColor = .TBlack
         return t
     }()
+    private var isTableInEdit = false
     var changeCompletion: (() -> Void)?
     
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         addButton.isEnabled = isEdit
+        sortButton.isEnabled = isEdit
         setupUI()
         setupData()
     }
@@ -108,6 +118,11 @@ class AddTrainingSchemeController: GradientBaseController{
         showDataController(schemeData: TrainingSchemeData())
     }
     
+    @objc private func didTapOnSortButton(){
+        isTableInEdit = !isTableInEdit
+        tableView.isEditing = isTableInEdit
+    }
+    
     @objc private func typeDidChanged(sender: UISegmentedControl){
         numberOfTrainingsLabel.text = sender.selectedSegmentIndex == 0 ? "trainingScheme.add.numberOfTrainingsLabel.hst".localized : "trainingScheme.add.numberOfTrainingsLabel".localized
 //        viewModel?.currentTrainingScheme.trainingMethod = TrainingMethod.create(value: sender.selectedSegmentIndex)
@@ -136,6 +151,7 @@ class AddTrainingSchemeController: GradientBaseController{
                     self?.viewModel?.refreshCurrentTrainingScheme()
                     self?.tableView.reloadData()
                     self?.addButton.isEnabled = true
+                    self?.sortButton.isEnabled = true
                     self?.changeCompletion?()
                 })
             }
@@ -162,6 +178,7 @@ class AddTrainingSchemeController: GradientBaseController{
                     self?.viewModel?.currentTrainingScheme(.init(withTrainingScheme: trScheme))
                     self?.tableView.reloadData()
                     self?.addButton.isEnabled = true
+                    self?.sortButton.isEnabled = true
                     self?.changeCompletion?()
                 }
             })
@@ -217,9 +234,18 @@ extension AddTrainingSchemeController: UITableViewDelegate, UITableViewDataSourc
                     self?.viewModel?.refreshCurrentTrainingScheme()
                     tableView.reloadData()
                     self?.addButton.isEnabled = true
+                    self?.sortButton.isEnabled = true
                 })
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        viewModel?.moveSchemeData(sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath)
     }
 }
 

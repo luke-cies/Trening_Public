@@ -9,16 +9,17 @@ import Foundation
 
 protocol TrainingSchemesViewModelProtocol{
     var currentTrainingScheme: EditTrainingScheme {get}
+    var loggedUserId: String {get}
+    var trainingSchemes: [TrainingScheme] {get}
     mutating func currentTrainingScheme(_ scheme: EditTrainingScheme)
     mutating func refreshCurrentTrainingScheme()
-    var trainingSchemes: [TrainingScheme] {get}
     func addTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void)
     func removeTrainingScheme(at indexPath: IndexPath, completion: @escaping (TrainingSchemeError?) -> Void)
-    func updateTrainingScheme(_ scheme: EditTrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void)
+    func updateTrainingScheme(_ scheme: EditTrainingScheme, completion: ((TrainingSchemeError?) -> Void)?)
     func addSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?, TrainingSchemeData?) -> Void)
     func updateSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void)
     func removeSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void)
-    var loggedUserId: String {get}
+    mutating func moveSchemeData(sourceIndexPath: IndexPath, destinationIndexPath: IndexPath)
 }
 
 struct EditTrainingScheme: TrainingSchemeProtocol{
@@ -53,8 +54,21 @@ struct EditTrainingScheme: TrainingSchemeProtocol{
 
 struct TrainingSchemesViewModel{
     private var _currentTrainingScheme: EditTrainingScheme!
+    
+    //MARK: - Private
+    private mutating func updateExercisesOrder(_ data: inout [TrainingSchemeData]){
+        var updatedData = [TrainingSchemeData]()
+        data.enumerated().forEach { (index, value) in
+            var updatedValue = value
+            updatedValue.exerciseOrder = index
+            updatedData.append(updatedValue)
+        }
+        
+        data = updatedData
+    }
 }
 
+//MARK: - TrainingSchemesViewModelProtocol
 extension TrainingSchemesViewModel: TrainingSchemesViewModelProtocol{
     var trainingSchemes: [TrainingScheme]{
         Service.trainingSchemes
@@ -83,7 +97,7 @@ extension TrainingSchemesViewModel: TrainingSchemesViewModelProtocol{
         Service.createTrainingScheme(credentials, completion: completion)
     }
     
-    func updateTrainingScheme(_ scheme: EditTrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void) {
+    func updateTrainingScheme(_ scheme: EditTrainingScheme, completion: ((TrainingSchemeError?) -> Void)?) {
         Service.updateTrainingScheme(scheme.trainingScheme(), completion: completion)
     }
     
@@ -103,6 +117,16 @@ extension TrainingSchemesViewModel: TrainingSchemesViewModelProtocol{
     
     func removeSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void) {
         Service.removeTrainingSchemeData(data, completion: completion)
+    }
+    
+    mutating func moveSchemeData(sourceIndexPath: IndexPath, destinationIndexPath: IndexPath) {
+        var exercises: [TrainingSchemeData] = _currentTrainingScheme.trainingSchemeData
+        exercises.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        
+        updateExercisesOrder(&exercises)
+        
+        _currentTrainingScheme.trainingSchemeData = exercises
+        updateTrainingScheme(_currentTrainingScheme, completion: nil)
     }
 }
 
