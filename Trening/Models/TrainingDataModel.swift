@@ -74,6 +74,7 @@ struct User: Codable{
     var avatarFileName: String
     var avatarData: Data?
     var isLoggedIn: Bool = false
+    var timestamp: Date = Date()
     
     //Read Only
     var fullName: String{
@@ -123,13 +124,15 @@ protocol TrainingSchemeProtocol{
 }
 
 struct TrainingScheme: Codable, TrainingSchemeProtocol{
-    var id: String = UUID().uuidString
+    var id: String = "\(UUID().uuidString)+\(Date.timeIntervalSinceReferenceDate)"
     var trainingMethod: TrainingMethod
     var name: String
     var numberOfWorkouts: Int
     var trainingType: TrainingType//scheme, plan
     var userId: String//creator
     var trainingSchemeData: [TrainingSchemeData]
+    var isRemoved: Bool = false
+    var timestamp: Date = Date()
     
     static func numberOfWorkoutsDescription(_ numberOfWorkouts: Int) -> String{
         var desc: String = ""
@@ -161,33 +164,52 @@ struct TrainingScheme: Codable, TrainingSchemeProtocol{
         self.userId = userId
         self.trainingSchemeData = trainingSchemeData
     }
+    
+    //MARK: - Public
+    func copy() -> TrainingScheme {
+        var copy = TrainingScheme(trainingMethod: self.trainingMethod, name: self.name, numberOfWorkouts: self.numberOfWorkouts, trainingType: self.trainingType, userId: self.userId, trainingSchemeData: self.trainingSchemeData)
+        copy.isRemoved = self.isRemoved
+        return copy
+    }
 }
 
 struct TrainingSchemeData: Codable{
-    var id: String = UUID().uuidString
+    var id: String = "\(UUID().uuidString)+\(Date.timeIntervalSinceReferenceDate)"
     var trainingSchemeId: String
     var exercise: Exercise
     var numberOfSeries: Int
     var weight: Double
     var addWeight: Double //Skok ciężaru
     var exerciseOrder: Int
+    var isRemoved: Bool = false
+    var trainingType: TrainingType//scheme, plan
+    var timestamp: Date = Date()
     
-    init(){
+    init(trainingType: TrainingType = .scheme){
         trainingSchemeId = String()
         exercise = Exercise(name: String(), userId: String())
         numberOfSeries = 0
         weight = 0.0
         addWeight = 0.0
         exerciseOrder = 0
+        self.trainingType = trainingType
     }
     
-    init(trainingSchemeId: String, exercise: Exercise, numberOfSeries: Int, weight: Double, addWeight: Double, exerciseOrder: Int){
+    init(trainingSchemeId: String, exercise: Exercise, numberOfSeries: Int, weight: Double, addWeight: Double, exerciseOrder: Int, trainingType: TrainingType){
         self.trainingSchemeId = trainingSchemeId
         self.exercise = exercise
         self.numberOfSeries = numberOfSeries
         self.weight = weight
         self.addWeight = addWeight
         self.exerciseOrder = exerciseOrder
+        self.trainingType = trainingType
+    }
+    
+    //MARK: - Public
+    func copy() -> TrainingSchemeData {
+        var copy = TrainingSchemeData(trainingSchemeId: self.trainingSchemeId, exercise: self.exercise, numberOfSeries: self.numberOfSeries, weight: self.weight, addWeight: self.addWeight, exerciseOrder: self.exerciseOrder, trainingType: self.trainingType)
+        copy.isRemoved = self.isRemoved
+        return copy
     }
 }
 
@@ -201,6 +223,7 @@ struct Training: Codable{
     let timestamp: Date
     var subType: TrainingSubType
     var trainingData: String
+    var isRemoved: Bool = false
 }
 
 struct TrainingData: Codable{
@@ -211,4 +234,5 @@ struct TrainingData: Codable{
     var currentSeries: Int
     var plannedWeight: Double
     var weight: Double
+    var isRemoved: Bool = false
 }

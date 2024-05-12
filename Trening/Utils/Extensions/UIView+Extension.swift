@@ -84,13 +84,13 @@ extension UIView{
             addSubview(view)}
     }
     
-    func pinToEdges(of superView: UIView) {
+    func pinToEdges(of superView: UIView, padding: CGFloat = 0.0) {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: superView.topAnchor),
-            leadingAnchor.constraint(equalTo: superView.leadingAnchor),
-            trailingAnchor.constraint(equalTo: superView.trailingAnchor),
-            bottomAnchor.constraint(equalTo: superView.bottomAnchor)
+            topAnchor.constraint(equalTo: superView.topAnchor, constant: padding),
+            leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: padding),
+            trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -padding),
+            bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: -padding)
         ])
     }
     

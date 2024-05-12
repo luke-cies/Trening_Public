@@ -72,7 +72,7 @@ class PlannedTrainingList: GradientTableViewController{
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            viewModel.removeTraining(at: indexPath) {[weak self] error in
+            viewModel.removeTrainingPlan(at: indexPath) {[weak self] error in
                 if let error = error{
                     self?.showError(error.description)
                     return

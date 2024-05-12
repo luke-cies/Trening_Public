@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+typealias ApiTrainingSchemeCompletion = (TrainingSchemeError?) -> Void
+typealias ApiAddTrainingSchemeCompletion = (TrainingSchemeError?, TrainingScheme?) -> Void
+typealias ApiAddTrainingDataSchemeCompletion = (TrainingSchemeError?, TrainingSchemeData?) -> Void
+
 enum UserOperationError: Error{
     case alreadyExist//create
     case cannotFind//update
@@ -26,15 +30,15 @@ enum ExerciseOperationError: Error{
 }
 
 enum TrainingSchemeError: Error{
-    case alreadyExist
-    case cannotFind
-    case cannotFindData
+    case alreadyExist(isScheme: Bool)
+    case cannotFind(isScheme: Bool)
+    case cannotFindData(isScheme: Bool)
     
     var description: String{
         switch(self){
-        case .alreadyExist: return "trainingScheme.alert.error.alreadyExist.message".localized
-        case .cannotFind:   return "trainingScheme.alert.error.cannotFind.message".localized
-        case .cannotFindData: return "trainingScheme.alert.error.cannotFindData.message".localized
+        case .alreadyExist(let isScheme): return isScheme ? "trainingScheme.alert.error.alreadyExist.message".localized : "plan.alert.error.alreadyExist.message".localized
+        case .cannotFind(let isScheme):   return isScheme ? "trainingScheme.alert.error.cannotFind.message".localized : "plan.alert.error.cannotFind.message".localized
+        case .cannotFindData(let isScheme): return isScheme ? "trainingScheme.alert.error.cannotFindData.message".localized : "plan.alert.error.cannotFindData.message".localized
         }
     }
 }
@@ -62,6 +66,7 @@ protocol TrainingSchemeDataCredentialsProtocol{
     var numberOfSeries: Int {get set}
     var weight: Double {get set}
     var addWeight: Double {get set}
+    var trainingType: TrainingType {get set}
 //    var exerciseOrder: Int {get set}
 }
 
@@ -86,12 +91,12 @@ protocol ExerciseApiProtocol{
 protocol TrainingSchemesApiProtocol{
     static var trainingSchemes: [TrainingScheme] {get}
     static func createTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void)
-    static func removeTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void)
-    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: ((TrainingSchemeError?) -> Void)?)
+    static func removeTrainingScheme(_ scheme: TrainingScheme, completion: @escaping ApiTrainingSchemeCompletion)
+    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: ApiTrainingSchemeCompletion?)
     
     static func createTrainingSchemeData(_ credentials: TrainingSchemeDataCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingSchemeData?) -> Void)
-    static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void)
-    static func updateTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void)
+    static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping ApiTrainingSchemeCompletion)
+    static func updateTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping ApiTrainingSchemeCompletion)
 }
 
 protocol TrainingsApiProtocol{

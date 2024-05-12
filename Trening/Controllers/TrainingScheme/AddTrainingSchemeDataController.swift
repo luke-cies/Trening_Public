@@ -99,7 +99,6 @@ class AddTrainingSchemeDataController: GradientBaseController{
             return
         }
         
-        
         if let text = numberOfSeriesTextField.text, text.count > 0{
             if let value = text.integer{
                 schemeData.numberOfSeries = value

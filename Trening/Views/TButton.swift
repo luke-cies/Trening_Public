@@ -18,7 +18,7 @@ class TButton: UIControl{
         l.textAlignment = .center
         return l
     }()
-    var title: String = String(){
+    var title: String? = String(){
         didSet{
             lbl.text = title
         }
@@ -59,7 +59,7 @@ class TButton: UIControl{
         setHeight(height: Consts.buttonHeight)
         
         addSubviews(lbl)
-        lbl.pinToEdges(of: self)
+        lbl.pinToEdges(of: self, padding: 5)
         
         layer.cornerRadius = 5
         layer.masksToBounds = true

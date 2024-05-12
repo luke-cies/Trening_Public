@@ -86,9 +86,9 @@
 
 //MARK: - Training schemes
 "trainingScheme.title" = "Schematy treningu";
-"trainingScheme.alert.error.alreadyExist.message" = "Schemat treningu juć istnieje";
-"trainingScheme.alert.error.cannotFind.message" = "Nie moćna znaleźć takiego schematu treningu";
-"trainingScheme.alert.error.cannotFindData.message" = "Nie moćna znaleźć takiego ćwiczenia w schemacie treningu";
+"trainingScheme.alert.error.alreadyExist.message" = "Schemat treningu już istnieje";
+"trainingScheme.alert.error.cannotFind.message" = "Nie można znaleźć takiego schematu treningu";
+"trainingScheme.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w schemacie treningu";
 "trainingScheme.numberOfTrainingsDescription.0" = "treningów";
 "trainingScheme.numberOfTrainingsDescription.1" = "trening";
 "trainingScheme.numberOfTrainingsDescription.2-4" = "treningi";
@@ -116,6 +116,21 @@
 "trainingScheme.add.data.error.weight" = "Nieprawidłowa wartość w polu 'Ciężar'";
 "trainingScheme.add.data.error.addWeight" = "Nieprawidłowa wartość w polu 'Skok ciężaru'";
 "trainingScheme.add.data.error.exercise" = "Brak ćwiczenia";
+"trainingScheme.add.defaultName" = "Wprowadź nazwę";
 
 //MARK: - Plan Training
 "plan.list.title" = "Lista treningów";
+"plan.add.title" = "Dodaj plan";
+"plan.add.exercises.title" = "Ćwiczenia:";
+"plan.add.name" = "Nazwa planu";
+"plan.add.numberOfTrainings" = "Ćwiczenia";
+"plan.add.typeLabel" = "Typ";
+"plan.add.nameLabel" = "Nazwa";
+"plan.add.numberOfTrainingsLabel.hst" = "Ilość treningów w cyklu";
+"plan.add.numberOfTrainingsLabel" = "Ilość treningów";
+"plan.add.error.numberOfTrainings" = "Nieprawidłowa wartość w polu 'Ilość treningów'";
+"plan.add.loadScheme" = "Wczytaj szablon";
+"plan.add.loadScheme.view.title" = "Wczytaj szablon";
+"plan.alert.error.alreadyExist.message" = "Plan treningu już istnieje";
+"plan.alert.error.cannotFind.message" = "Nie można znaleźć takiego planu treningu";
+"plan.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w planie treningu";

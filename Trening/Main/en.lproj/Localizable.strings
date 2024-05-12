@@ -116,6 +116,21 @@
 "trainingScheme.add.data.error.weight" = "Wrong value in 'Weight'";
 "trainingScheme.add.data.error.addWeight" = "Wrong value in 'Add weight'";
 "trainingScheme.add.data.error.exercise" = "No Exercise";
+"trainingScheme.add.defaultName" = "Enter a name";
 
 //MARK: - Plan Training
 "plan.list.title" = "Planned trainings list";
+"plan.add.title" = "Add plan";
+"plan.add.exercises.title" = "Exercises:";
+"plan.add.name" = "Plan name";
+"plan.add.numberOfTrainings" = "Trainings #";
+"plan.add.typeLabel" = "Type";
+"plan.add.nameLabel" = "Name";
+"plan.add.numberOfTrainingsLabel.hst" = "Number of trainings in the cycle";
+"plan.add.numberOfTrainingsLabel" = "Number of trainings";
+"plan.add.error.numberOfTrainings" = "Wrong value in 'Number of trainings'";
+"plan.add.loadScheme" = "Load scheme";
+"plan.add.loadScheme.view.title" = "Load scheme";
+"plan.alert.error.alreadyExist.message" = "Training plan already exists";
+"plan.alert.error.cannotFind.message" = "Cannot find such training plan";
+"plan.alert.error.cannotFindData.message" = "Cannot find such exercise in the training plan";

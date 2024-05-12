@@ -31,6 +31,7 @@ struct TrainingSchemeDataCredentials: TrainingSchemeDataCredentialsProtocol{
     var numberOfSeries: Int
     var weight: Double
     var addWeight: Double
+    var trainingType: TrainingType
 //    var exerciseOrder: Int
 }
 
@@ -218,13 +219,27 @@ extension Service: ExerciseApiProtocol{
 //MARK: - TrainingSchemesProtocol
 extension Service: TrainingSchemesApiProtocol{
     static var trainingSchemes: [TrainingScheme]{
+        var activeSchemes: [TrainingScheme] = [TrainingScheme]()
+
+        UserDefaults.trainingSchemes.filter{ $0.isRemoved != true }.forEach { scheme in
+            activeSchemes.append(scheme)
+            let schemeData = scheme.trainingSchemeData.filter({ $0.isRemoved != true })
+            if let lastIndex = activeSchemes.firstIndex(where: { $0.id == scheme.id }) {
+                activeSchemes[lastIndex].trainingSchemeData = schemeData
+            }
+        }
+
+        return activeSchemes
+    }
+    
+    private static var allTrainingSchemes: [TrainingScheme] {
         UserDefaults.trainingSchemes
     }
     
-    static func createTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingScheme?) -> Void) {
-        if let _ = trainingSchemes.first(where: { $0.name == credentials.name && $0.userId == credentials.userId }){
+    static func createTrainingScheme(_ credentials: TrainingSchemeCredentialsProtocol, completion: @escaping ApiAddTrainingSchemeCompletion) {
+        if let _ = trainingSchemes.first(where: { $0.name == credentials.name && $0.userId == credentials.userId && $0.trainingType == credentials.trainingType && $0.numberOfWorkouts == credentials.numberOfWorkouts && $0.trainingMethod == credentials.trainingMethod }){
             Logger.error("Training scheme: \(credentials.name) already exist")
-            completion(.alreadyExist, nil)
+            completion(.alreadyExist(isScheme: credentials.trainingType == .scheme), nil)
             return
         }
         
@@ -233,7 +248,7 @@ extension Service: TrainingSchemesApiProtocol{
         var trData = [TrainingSchemeData]()
         var counter = 0
         credentials.trainingSchemeData.forEach { dataCedentials in
-            trData.append(TrainingSchemeData(trainingSchemeId: tr.id, exercise: dataCedentials.exercise, numberOfSeries: dataCedentials.numberOfSeries, weight: dataCedentials.weight, addWeight: dataCedentials.addWeight, exerciseOrder: counter))
+            trData.append(TrainingSchemeData(trainingSchemeId: tr.id, exercise: dataCedentials.exercise, numberOfSeries: dataCedentials.numberOfSeries, weight: dataCedentials.weight, addWeight: dataCedentials.addWeight, exerciseOrder: counter, trainingType: credentials.trainingType))
             counter += 1
         }
         tr.trainingSchemeData = trData
@@ -243,77 +258,79 @@ extension Service: TrainingSchemesApiProtocol{
         completion(nil, tr)
     }
     
-    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: ((TrainingSchemeError?) -> Void)?) {
-        if let idx = trainingSchemes.firstIndex(where: { $0.id == scheme.id }){
+    static func updateTrainingScheme(_ scheme: TrainingScheme, completion: ApiTrainingSchemeCompletion?) {
+        if let idx = allTrainingSchemes.firstIndex(where: { $0.id == scheme.id }){
             UserDefaults.trainingSchemes[idx] = scheme
             Logger.log("Training scheme \(scheme) was updated")
             completion?(nil)
         }
         else{
             Logger.error("Cannot edit Training scheme because it doesn't exist. \(scheme)")
-            completion?(.cannotFind)
+            completion?(.cannotFind(isScheme: scheme.trainingType == .scheme))
         }
     }
     
-    static func removeTrainingScheme(_ scheme: TrainingScheme, completion: @escaping (TrainingSchemeError?) -> Void) {
-        if let idx = trainingSchemes.firstIndex(where: { $0.id == scheme.id }){
-            UserDefaults.trainingSchemes.remove(at: idx)
+    static func removeTrainingScheme(_ scheme: TrainingScheme, completion: @escaping ApiTrainingSchemeCompletion) {
+        if let _ = allTrainingSchemes.firstIndex(where: { $0.id == scheme.id }){
+//            UserDefaults.trainingSchemes.remove(at: idx)
+            Service.updateTrainingScheme(scheme, completion: completion)
             Logger.log("Training scheme \(scheme) was removed")
-            completion(nil)
+//            completion(nil)
         }
         else{
             Logger.error("Cannot remove Training scheme because it doesn't exist. \(scheme)")
-            completion(.cannotFind)
+            completion(.cannotFind(isScheme: scheme.trainingType == .scheme))
         }
     }
     
-    static func createTrainingSchemeData(_ credentials: TrainingSchemeDataCredentialsProtocol, completion: @escaping (TrainingSchemeError?, TrainingSchemeData?) -> Void) {
-        if let schemeIdx = trainingSchemes.firstIndex(where: { $0.id == credentials.trainingSchemeId }){
+    static func createTrainingSchemeData(_ credentials: TrainingSchemeDataCredentialsProtocol, completion: @escaping ApiAddTrainingDataSchemeCompletion) {
+        if let schemeIdx = allTrainingSchemes.firstIndex(where: { $0.id == credentials.trainingSchemeId }){
             let counter = UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.count
-            let data = TrainingSchemeData(trainingSchemeId: credentials.trainingSchemeId, exercise: credentials.exercise, numberOfSeries: credentials.numberOfSeries, weight: credentials.weight, addWeight: credentials.addWeight, exerciseOrder: counter)
+            let data = TrainingSchemeData(trainingSchemeId: credentials.trainingSchemeId, exercise: credentials.exercise, numberOfSeries: credentials.numberOfSeries, weight: credentials.weight, addWeight: credentials.addWeight, exerciseOrder: counter, trainingType: credentials.trainingType)
             UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.append(data)
             Logger.log("Training scheme data \(data) created")
             completion(nil, data)
         }
         else{
             Logger.error("Cannot create scheme training data because the Training scheme \(credentials.trainingSchemeId) doesn't exist")
-            completion(.cannotFind, nil)
+            completion(.cannotFind(isScheme: credentials.trainingType == .scheme), nil)
         }
     }
     
-    static func updateTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void) {
-        if let schemeIdx = trainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
-            if let SchemeDataIdx = trainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
+    static func updateTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping ApiTrainingSchemeCompletion) {
+        if let schemeIdx = allTrainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
+            if let SchemeDataIdx = allTrainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
                 UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData[SchemeDataIdx] = data
                 Logger.log("Training scheme data \(data) updated")
                 completion(nil)
             }
             else{
                 Logger.error("Cannot find Training Scheme data: \(data) to update")
-                completion(.cannotFindData)
+                completion(.cannotFindData(isScheme: data.trainingType == .scheme))
             }
         }
         else{
             Logger.error("Cannot update Training Scheme data: \(data) because the training Scheme doesn't exist")
-            completion(.cannotFind)
+            completion(.cannotFind(isScheme: data.trainingType == .scheme))
         }
     }
     
-    static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping (TrainingSchemeError?) -> Void) {
-        if let schemeIdx = trainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
-            if let SchemeDataIdx = trainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
-                UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.remove(at: SchemeDataIdx)
-                Logger.log("Training scheme data \(data) removed")
-                completion(nil)
-            }
-            else{
-                Logger.error("Cannot find Training Scheme data: \(data) to remove")
-                completion(.cannotFindData)
-            }
+    static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping ApiTrainingSchemeCompletion) {
+        if let schemeIdx = allTrainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
+//            if let SchemeDataIdx = trainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
+                Service.updateTrainingSchemeData(data, completion: completion)
+//                UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.remove(at: SchemeDataIdx)
+//                Logger.log("Training scheme data \(data) removed")
+//                completion(nil)
+//            }
+//            else{
+//                Logger.error("Cannot find Training Scheme data: \(data) to remove")
+//                completion(.cannotFindData)
+//            }
         }
         else{
             Logger.error("Cannot remove Training Scheme data: \(data) because the training Scheme doesn't exist")
-            completion(.cannotFind)
+            completion(.cannotFind(isScheme: data.trainingType == .scheme))
         }
     }
 }

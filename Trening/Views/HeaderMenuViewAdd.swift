@@ -8,26 +8,27 @@
 import Foundation
 import UIKit
 
+typealias HeaderMenuViewAddButtonCompletion = () -> Void
+
 class HeaderMenuViewAdd: UIView{
     //MARK: - Properties
     private var addButton = TButton.create("add".localized)
     private var label: UILabel = UILabel(frame: .zero)
-    var addButtonTappedCompletion: (() -> Void)!
-    lazy var buttonText: String? = String(){
+    var addButtonTappedCompletion: HeaderMenuViewAddButtonCompletion?
+    var buttonText: String? = String(){
         didSet{
             addButton.isHidden = (buttonText == nil || buttonText == "")
-            if let buttonText = buttonText{
-                addButton.title = buttonText
-            }
-            else{
-                addButton.title = ""
-            }
+            addButton.title = buttonText
         }
     }
     var title: String? = String(){
-        didSet{
-            label.text = title
-        }
+        didSet{ label.text = title }
+    }
+    var titleFont: UIFont = .boldSystemFont(ofSize: Consts.titleFontSize) {
+        didSet { label.font = titleFont }
+    }
+    var isButtonEnabled: Bool = true {
+        didSet { addButton.isEnabled = isButtonEnabled }
     }
     
     //MARK: - Init
@@ -40,7 +41,7 @@ class HeaderMenuViewAdd: UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func create(_ completion: @escaping () -> Void) -> HeaderMenuViewAdd{
+    static func create(_ completion: @escaping HeaderMenuViewAddButtonCompletion) -> HeaderMenuViewAdd{
         let h = HeaderMenuViewAdd(frame: .zero)
         h.addButtonTappedCompletion = completion
         return h
@@ -54,10 +55,10 @@ class HeaderMenuViewAdd: UIView{
         line.backgroundColor = .TBlack
         
         label.numberOfLines = 1
-        label.font = .boldSystemFont(ofSize: Consts.titleFontSize)
+        label.font = titleFont
         label.textColor = .TBlackText
         
-        let stack = UIStackView(axis: .horizontal, spacing: 5, subviews: [label, addButton])        
+        let stack = UIStackView(axis: .horizontal, spacing: 5, subviews: [label, addButton])
         addButton.setWidth(width: 90)
         addButton.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         
@@ -68,6 +69,6 @@ class HeaderMenuViewAdd: UIView{
     
     //MARK: - Event
     @objc private func didTapOnButton(_ sender: TButton){
-        addButtonTappedCompletion()
+        addButtonTappedCompletion?()
     }
 }

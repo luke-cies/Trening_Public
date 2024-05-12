@@ -37,23 +37,9 @@ class AddTrainingSchemeController: GradientBaseController{
     private var nameTextField = CustomTextField(placeholder: "trainingScheme.add.name".localized)
     private var numberOfTrainings = CustomTextField(placeholder: "trainingScheme.add.numberOfTrainings".localized)
     private var numberOfTrainingsLabel = TLabel(text: "trainingScheme.add.typeLabel".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
-    private lazy var exercisesHeaderView: UIView = {
-        let v = UIView(frame: .zero)
-        let titleLabel = TLabel(text: "trainingScheme.add.exercises.title".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
-        let stack = UIStackView(axis: .horizontal, spacing: 10, subviews: [titleLabel, sortButton, addButton])
-        v.addSubviews(stack)
-        stack.pinToEdges(of: v)
-        addButton.setWidth(width: 80)
-        sortButton.setWidth(width: 80)
-        return v
-    }()
-    private lazy var addButton: TButton = {
-        let addButton = TButton.create("add".localized)
-        addButton.isEnabled = false
-        addButton.addTarget(self, action: #selector(didTapOnAddButton), for: .touchUpInside)
-        
-        return addButton
-    }()
+    private lazy var exercisesHeaderView: HeaderMenuViewAdd = HeaderMenuViewAdd.create {[weak self] in
+        self?.didTapOnAddButton()
+    }
     private lazy var sortButton: TButton = {
         let b = TButton.create("sort".localized)
         b.isEnabled = false
@@ -77,7 +63,7 @@ class AddTrainingSchemeController: GradientBaseController{
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-        addButton.isEnabled = isEdit
+        exercisesHeaderView.isButtonEnabled = isEdit
         sortButton.isEnabled = isEdit
         setupUI()
         setupData()
@@ -91,11 +77,15 @@ class AddTrainingSchemeController: GradientBaseController{
         headerView.title = "trainingScheme.add.title".localized
         headerView.buttonText = "save".localized
         
+        exercisesHeaderView.title = "trainingScheme.add.exercises.title".localized
+        exercisesHeaderView.titleFont = .boldSystemFont(ofSize: Consts.standardLabelFontSize)
+        exercisesHeaderView.buttonText = "add".localized
+        
         view.addSubviews(headerView, schemeHeaderView, exercisesHeaderView, tableView)
         headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: Consts.mainMenuHeight)
         typeSegmentedControl.addTarget(self, action: #selector(typeDidChanged), for: .valueChanged)
         schemeHeaderView.anchor(top: headerView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor)
-        exercisesHeaderView.anchor(top: schemeHeaderView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
+        exercisesHeaderView.anchor(top: schemeHeaderView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 10, height: Consts.mainMenuHeight)
         tableView.anchor(top: exercisesHeaderView.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10)
         
         nameTextField.textAlignment = .right
@@ -106,9 +96,15 @@ class AddTrainingSchemeController: GradientBaseController{
     //MARK: - Private
     private func setupData(){
         typeSegmentedControl.selectedSegmentIndex = viewModel?.currentTrainingScheme.trainingMethod.value ?? 0
-        nameTextField.placeholder = viewModel?.currentTrainingScheme.name
         numberOfTrainingsLabel.text = typeSegmentedControl.selectedSegmentIndex == 0 ? "trainingScheme.add.numberOfTrainingsLabel.hst".localized : "trainingScheme.add.numberOfTrainingsLabel".localized
-        numberOfTrainings.placeholder = viewModel?.currentTrainingScheme.numberOfWorkouts.description
+        if let isNew = viewModel?.currentTrainingScheme.isNew, isNew {
+            nameTextField.placeholder = viewModel?.currentTrainingScheme.name
+            numberOfTrainings.placeholder = viewModel?.currentTrainingScheme.numberOfWorkouts.description
+        }
+        else {
+            nameTextField.text = viewModel?.currentTrainingScheme.name
+            numberOfTrainings.text = viewModel?.currentTrainingScheme.numberOfWorkouts.description
+        }
         
         tableView.reloadData()
     }
@@ -150,7 +146,7 @@ class AddTrainingSchemeController: GradientBaseController{
                     }
                     self?.viewModel?.refreshCurrentTrainingScheme()
                     self?.tableView.reloadData()
-                    self?.addButton.isEnabled = true
+                    self?.exercisesHeaderView.isButtonEnabled = true
                     self?.sortButton.isEnabled = true
                     self?.changeCompletion?()
                 })
@@ -177,7 +173,7 @@ class AddTrainingSchemeController: GradientBaseController{
                 if let trScheme = trScheme{
                     self?.viewModel?.currentTrainingScheme(.init(withTrainingScheme: trScheme))
                     self?.tableView.reloadData()
-                    self?.addButton.isEnabled = true
+                    self?.exercisesHeaderView.isButtonEnabled = true
                     self?.sortButton.isEnabled = true
                     self?.changeCompletion?()
                 }
@@ -186,13 +182,12 @@ class AddTrainingSchemeController: GradientBaseController{
     }
     
     private func validate() -> Bool{
-        if let text = numberOfTrainings.text, text.count > 0{
-            if text.integer == nil{
-                showError("trainingScheme.add.error.numberOfTrainings".localized)
-                return false
-            }
+        if let text = numberOfTrainings.text, text.count > 0, (text.integer ?? 0) > 0 {
+            return true
         }
-        return true
+        
+        showError("trainingScheme.add.error.numberOfTrainings".localized)
+        return false
     }
     
     private func showDataController(schemeData: TrainingSchemeData){
@@ -233,7 +228,7 @@ extension AddTrainingSchemeController: UITableViewDelegate, UITableViewDataSourc
                     }
                     self?.viewModel?.refreshCurrentTrainingScheme()
                     tableView.reloadData()
-                    self?.addButton.isEnabled = true
+                    self?.exercisesHeaderView.isButtonEnabled = true
                     self?.sortButton.isEnabled = true
                 })
             }
