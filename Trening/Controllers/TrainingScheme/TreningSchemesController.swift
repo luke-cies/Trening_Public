@@ -12,7 +12,7 @@ class TreningSchemesController: GradientTableViewController{
     //MARK: - Properties
     private let reuseIdentifier = "TrainingSchemesCell"
     private lazy var headerView: HeaderMenuViewAdd = {
-        let h = HeaderMenuViewAdd.create { [weak self] in
+        let h = HeaderMenuViewAdd.create { [weak self]  in 
             self?.viewModel.currentTrainingScheme(.init(withTrainingScheme: TrainingScheme()))
             self?.showTrainingSchemeDetails()
         }
