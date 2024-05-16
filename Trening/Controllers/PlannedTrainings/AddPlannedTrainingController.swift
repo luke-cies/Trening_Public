@@ -18,20 +18,24 @@ class AddPlannedTrainingController: GradientBaseController{
         let v = UIView(frame: .zero)
         
         var typeLabel = TLabel(text: "plan.add.typeLabel".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
+        var subTypeLabel = TLabel(text: "plan.add.subTypeLabel".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
         var nameLabel = TLabel(text: "plan.add.nameLabel".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
         var typeStack = UIStackView(axis: .horizontal, spacing: 10, subviews: [typeLabel, typeSegmentedControl])
+        var subTypeStack = UIStackView(axis: .horizontal, spacing: 10, subviews: [subTypeLabel, subTypeSegmentedControl])
         var nameStack = UIStackView(axis: .horizontal, spacing: 10, subviews: [nameLabel, nameTextField])
         var numberOfTrainingsStack = UIStackView(axis: .horizontal, spacing: 10, subviews: [numberOfTrainingsLabel, numberOfTrainings])
-        let stack = UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 15, subviews: [typeStack, nameStack, numberOfTrainingsStack])
+        let stack = UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 15, subviews: [typeStack, subTypeStack, nameStack, numberOfTrainingsStack])
         v.addSubviews(stack)
         
         typeSegmentedControl.setWidth(width: 100)
+        subTypeSegmentedControl.setWidth(width: 250)
         stack.anchor(top: v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 10)
-        v.setHeight(height: 100)
+        v.setHeight(height: 150)
         
         return v
     }()
     private var typeSegmentedControl: UISegmentedControl = UISegmentedControl(items: [TrainingMethod.HST.rawValue, TrainingMethod.FBW.rawValue])
+    private var subTypeSegmentedControl: UISegmentedControl = UISegmentedControl(items: [TrainingSubType.mass.description, TrainingSubType.reduction.description, TrainingSubType.deload.description])
     private var nameTextField = CustomTextField(placeholder: "plan.add.name".localized)
     private var numberOfTrainings = CustomTextField(placeholder: "plan.add.numberOfTrainings".localized)
     private var numberOfTrainingsLabel = TLabel(text: "plan.add.typeLabel".localized, font: .systemFont(ofSize: Consts.standardLabelFontSize), textColor: .TBlackText)
@@ -66,11 +70,14 @@ class AddPlannedTrainingController: GradientBaseController{
         headerView.buttonText = "save".localized
         
         let loadSchemeView = ButtonsView()
-        loadSchemeView.data = [.init(title: "plan.add.loadScheme".localized, isEnabled: !isEdit)]
+        loadSchemeView.data = [.init(title: "plan.add.loadScheme".localized, isEnabled: !isEdit), .init(title: "plan.add.run".localized, isEnabled: isEdit)]
         loadSchemeView.buttonsOnTheLeft = true
         loadSchemeView.buttonTapActionCompletion = { [weak self] (buttonNumber: Int) in
             if buttonNumber == 0 {//load scheme
                 self?.showLoadSchemeController()
+            }
+            else if buttonNumber == 1 { //Create trainings
+                self?.runCurrentPlan()
             }
         }
         
@@ -81,7 +88,9 @@ class AddPlannedTrainingController: GradientBaseController{
         view.addSubviews(headerView, loadSchemeView, trainingHeaderView, exercisesHeaderView, tableView)
         headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: Consts.mainMenuHeight)
         loadSchemeView.anchor(top: headerView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 10, paddingRight: 10)
-        typeSegmentedControl.addTarget(self, action: #selector(typeDidChanged), for: .valueChanged)
+        typeSegmentedControl.addTarget(self, action: #selector(segmentedControlDidChanged), for: .valueChanged)
+        subTypeSegmentedControl.addTarget(self, action: #selector(segmentedControlDidChanged), for: .valueChanged)
+        
         trainingHeaderView.anchor(top: loadSchemeView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 10)
         exercisesHeaderView.anchor(top: trainingHeaderView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 10, height: Consts.mainMenuHeight)
         tableView.anchor(top: exercisesHeaderView.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
@@ -94,6 +103,7 @@ class AddPlannedTrainingController: GradientBaseController{
     //MARK: - Private
     private func setupData(){
         typeSegmentedControl.selectedSegmentIndex = viewModel?.currentTrainingScheme.trainingMethod.value ?? 0
+        subTypeSegmentedControl.selectedSegmentIndex = viewModel?.currentTrainingScheme.subType.rawValue ?? 0
         numberOfTrainingsLabel.text = typeSegmentedControl.selectedSegmentIndex == 0 ? "plan.add.numberOfTrainingsLabel.hst".localized : "plan.add.numberOfTrainingsLabel".localized
         
         if let isNew = viewModel?.currentTrainingScheme.isNew, isNew {
@@ -122,6 +132,7 @@ class AddPlannedTrainingController: GradientBaseController{
                 }
                 
                 scheme.trainingMethod = TrainingMethod.create(value: typeSegmentedControl.selectedSegmentIndex)
+                scheme.subType = TrainingSubType(rawValue: subTypeSegmentedControl.selectedSegmentIndex) ?? .mass
                 
                 viewModel?.updateTrainingPlan(scheme, completion: { [weak self] (err: TrainingSchemeError?) in
                     if let err = err{
@@ -139,7 +150,7 @@ class AddPlannedTrainingController: GradientBaseController{
         }
         else {//create
             guard let userId = viewModel?.loggedUserId, userId.count > 0 else {return}
-            var credentials = TrainingSchemeCredentials(trainingMethod: TrainingMethod.create(value: typeSegmentedControl.selectedSegmentIndex), numberOfWorkouts: 0, trainingType: .plan, trainingSchemeData: [TrainingSchemeDataCredentialsProtocol](), userId: userId)
+            var credentials = TrainingSchemeCredentials(trainingMethod: TrainingMethod.create(value: typeSegmentedControl.selectedSegmentIndex), numberOfWorkouts: 0, trainingType: .plan, subType: (TrainingSubType(rawValue: subTypeSegmentedControl.selectedSegmentIndex) ?? .mass), trainingSchemeData: [TrainingSchemeDataCredentialsProtocol](), userId: userId)
             
             if let numberoOfWorkouts = numberOfTrainings.text!.integer{
                 credentials.numberOfWorkouts = numberoOfWorkouts
@@ -208,14 +219,31 @@ class AddPlannedTrainingController: GradientBaseController{
         setupData()
     }
     
+    private func runCurrentPlan() {
+        viewModel?.runCurrentPlan{ (error: TrainingError?) in
+            if let error = error {
+                let alert = UIAlertController(title: "error".localized, message: error.description, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+                self.present(alert, animated: true)
+                return
+            }
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     //MARK: - Events
     @objc private func didTapOnAddButton(){
         showDataController(schemeData: TrainingSchemeData(trainingType: .plan))
     }
     
-    @objc private func typeDidChanged(sender: UISegmentedControl){
-        numberOfTrainingsLabel.text = sender.selectedSegmentIndex == 0 ? "plan.add.numberOfTrainingsLabel.hst".localized : "plan.add.numberOfTrainingsLabel".localized
-//        viewModel?.currentTrainingScheme.trainingMethod = TrainingMethod.create(value: sender.selectedSegmentIndex)
+    @objc private func segmentedControlDidChanged(sender: UISegmentedControl){
+        if sender == typeSegmentedControl {
+            numberOfTrainingsLabel.text = sender.selectedSegmentIndex == 0 ? "plan.add.numberOfTrainingsLabel.hst".localized : "plan.add.numberOfTrainingsLabel".localized
+            //        viewModel?.currentTrainingScheme.trainingMethod = TrainingMethod.create(value: sender.selectedSegmentIndex)
+        }
+        else if sender == subTypeSegmentedControl {
+            //Do nothing
+        }
     }
 }
 

@@ -125,6 +125,7 @@
 "plan.add.name" = "Plan name";
 "plan.add.numberOfTrainings" = "Trainings #";
 "plan.add.typeLabel" = "Type";
+"plan.add.subTypeLabel" = "Subtype";
 "plan.add.nameLabel" = "Name";
 "plan.add.numberOfTrainingsLabel.hst" = "Number of trainings in the cycle";
 "plan.add.numberOfTrainingsLabel" = "Number of trainings";
@@ -134,3 +135,6 @@
 "plan.alert.error.alreadyExist.message" = "Training plan already exists";
 "plan.alert.error.cannotFind.message" = "Cannot find such training plan";
 "plan.alert.error.cannotFindData.message" = "Cannot find such exercise in the training plan";
+"plan.add.run" = "Run";
+"trening.alert.error.cannotFind.message" = "Cannot find such training";
+"trening.alert.error.cannotFindData.message" = "Cannot find such exercise in the training";

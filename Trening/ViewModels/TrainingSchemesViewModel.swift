@@ -32,6 +32,7 @@ struct EditTrainingScheme: TrainingSchemeProtocol{
     var name: String
     var numberOfWorkouts: Int
     var trainingType: TrainingType
+    var subType: TrainingSubType = .mass //used only in plan
     var userId: String
     var trainingSchemeData: [TrainingSchemeData]
     let isNew: Bool
@@ -45,13 +46,14 @@ struct EditTrainingScheme: TrainingSchemeProtocol{
         name = scheme.name.count > 0 ? scheme.name : "trainingScheme.add.defaultName".localized
         numberOfWorkouts = scheme.numberOfWorkouts
         trainingType = scheme.trainingType
+        subType = scheme.subType
         userId = scheme.userId
         trainingSchemeData = scheme.trainingSchemeData
         isNew = scheme.name.count == 0
     }
     
     func trainingScheme() -> TrainingScheme{
-        var s = TrainingScheme(trainingMethod: trainingMethod, name: name, numberOfWorkouts: numberOfWorkouts, trainingType: trainingType, userId: userId, trainingSchemeData: trainingSchemeData)
+        var s = TrainingScheme(trainingMethod: trainingMethod, name: name, numberOfWorkouts: numberOfWorkouts, trainingType: trainingType, userId: userId, trainingSchemeData: trainingSchemeData, subType: subType)
         s.id = id
         
         return s

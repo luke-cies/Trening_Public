@@ -13,7 +13,7 @@ class ButtonsView: UIView {
     var data: [ButtonData]? = [ButtonData]() { didSet { setupButtons() } }
     var buttonTapActionCompletion: ((Int) -> Void)? //Int: Button Tag
     var buttonsOnTheLeft: Bool = false { didSet { setupButtons() } }
-    private var buttonsStack = UIStackView()
+    private var buttonsStack = UIStackView(spacing: 10, subviews: [UIView]())
     
     //MARK: - Init
     init(data: [ButtonData]? = nil) {
@@ -39,6 +39,7 @@ class ButtonsView: UIView {
                 b.tag = counter
                 b.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
                 b.isEnabled = t.isEnabled
+                b.widthAnchor.constraint(greaterThanOrEqualToConstant: 70).isActive = true
                 buttons.append(b)
                 counter += 1
             }

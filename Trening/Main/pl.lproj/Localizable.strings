@@ -125,6 +125,7 @@
 "plan.add.name" = "Nazwa planu";
 "plan.add.numberOfTrainings" = "Ćwiczenia";
 "plan.add.typeLabel" = "Typ";
+"plan.add.subTypeLabel" = "Podtyp";
 "plan.add.nameLabel" = "Nazwa";
 "plan.add.numberOfTrainingsLabel.hst" = "Ilość treningów w cyklu";
 "plan.add.numberOfTrainingsLabel" = "Ilość treningów";
@@ -134,3 +135,6 @@
 "plan.alert.error.alreadyExist.message" = "Plan treningu już istnieje";
 "plan.alert.error.cannotFind.message" = "Nie można znaleźć takiego planu treningu";
 "plan.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w planie treningu";
+"plan.add.run" = "Rozpocznij";
+"trening.alert.error.cannotFind.message" = "Nie można znaleźć takiego treningu";
+"trening.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w treningu";

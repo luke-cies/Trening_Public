@@ -119,6 +119,7 @@ protocol TrainingSchemeProtocol{
     var trainingType: TrainingType {get set}
     var userId: String {get set}//creator
     var trainingSchemeData: [TrainingSchemeData] {get set}
+    var subType: TrainingSubType {get set}
     
     static func numberOfWorkoutsDescription(_ numberOfWorkouts: Int) -> String
 }
@@ -131,6 +132,7 @@ struct TrainingScheme: Codable, TrainingSchemeProtocol{
     var trainingType: TrainingType//scheme, plan
     var userId: String//creator
     var trainingSchemeData: [TrainingSchemeData]
+    var subType: TrainingSubType
     var isRemoved: Bool = false
     var timestamp: Date = Date()
     
@@ -154,20 +156,22 @@ struct TrainingScheme: Codable, TrainingSchemeProtocol{
         trainingType = .scheme
         userId = String()
         trainingSchemeData = [TrainingSchemeData]()
+        subType = .mass
     }
     
-    init(trainingMethod: TrainingMethod, name: String, numberOfWorkouts: Int, trainingType: TrainingType, userId: String, trainingSchemeData: [TrainingSchemeData]){
+    init(trainingMethod: TrainingMethod, name: String, numberOfWorkouts: Int, trainingType: TrainingType, userId: String, trainingSchemeData: [TrainingSchemeData], subType: TrainingSubType){
         self.trainingMethod = trainingMethod
         self.name = name
         self.numberOfWorkouts = numberOfWorkouts
         self.trainingType = trainingType
         self.userId = userId
         self.trainingSchemeData = trainingSchemeData
+        self.subType = subType
     }
     
     //MARK: - Public
     func copy() -> TrainingScheme {
-        var copy = TrainingScheme(trainingMethod: self.trainingMethod, name: self.name, numberOfWorkouts: self.numberOfWorkouts, trainingType: self.trainingType, userId: self.userId, trainingSchemeData: self.trainingSchemeData)
+        var copy = TrainingScheme(trainingMethod: self.trainingMethod, name: self.name, numberOfWorkouts: self.numberOfWorkouts, trainingType: self.trainingType, userId: self.userId, trainingSchemeData: self.trainingSchemeData, subType: self.subType)
         copy.isRemoved = self.isRemoved
         return copy
     }
@@ -220,19 +224,23 @@ struct Training: Codable{
     var trainingMethod: TrainingMethod
     let planId: String//TrainingScheme.id
     let trainingCounter: Int
-    let timestamp: Date
+    let createDate: Date
+    var timestamp: Date = .now
     var subType: TrainingSubType
-    var trainingData: String
+    var trainingData: [TrainingData]
     var isRemoved: Bool = false
 }
 
 struct TrainingData: Codable{
     var id: String = UUID().uuidString
+    var trainingId: String
     var status: TrainingStatus = .toDo//without InProgress!!
     var exercise: Exercise
+    var exerciseOrder: Int
     var plannedNumberOfSeries: Int
-    var currentSeries: Int
+    var currentSeries: Int = 0
     var plannedWeight: Double
-    var weight: Double
+    var weight: Double = 0.0
     var isRemoved: Bool = false
+    var comment: String = String()
 }

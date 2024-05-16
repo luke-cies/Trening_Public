@@ -21,6 +21,7 @@ struct TrainingSchemeCredentials: TrainingSchemeCredentialsProtocol{
     var name: String = "trainingScheme.add.name".localized
     var numberOfWorkouts: Int
     var trainingType: TrainingType
+    var subType: TrainingSubType = .mass
     var trainingSchemeData: [TrainingSchemeDataCredentialsProtocol]
     var userId: String
 }
@@ -33,6 +34,24 @@ struct TrainingSchemeDataCredentials: TrainingSchemeDataCredentialsProtocol{
     var addWeight: Double
     var trainingType: TrainingType
 //    var exerciseOrder: Int
+}
+
+struct TrainingCredentials: TrainingCredentialsProtocol {
+    var trainingCounter: Int
+    var subType: TrainingSubType
+    var trainingData: [TrainingDataCredentialsProtocol]
+    var trainingMethod: TrainingMethod
+    var planId: String
+    var userId: String
+    
+    struct TrainingDataCredentials: TrainingDataCredentialsProtocol {
+        var trainingId: String
+        var exercise: Exercise
+        var exerciseOrder: Int
+        var plannedNumberOfSeries: Int
+        var plannedWeight: Double
+//        var comment: String
+    }
 }
 
 
@@ -243,7 +262,7 @@ extension Service: TrainingSchemesApiProtocol{
             return
         }
         
-        var tr = TrainingScheme(trainingMethod: credentials.trainingMethod, name: credentials.name, numberOfWorkouts: credentials.numberOfWorkouts, trainingType: credentials.trainingType, userId: credentials.userId, trainingSchemeData: [TrainingSchemeData]())
+        var tr = TrainingScheme(trainingMethod: credentials.trainingMethod, name: credentials.name, numberOfWorkouts: credentials.numberOfWorkouts, trainingType: credentials.trainingType, userId: credentials.userId, trainingSchemeData: [TrainingSchemeData](), subType: credentials.subType)
         
         var trData = [TrainingSchemeData]()
         var counter = 0
@@ -316,17 +335,8 @@ extension Service: TrainingSchemesApiProtocol{
     }
     
     static func removeTrainingSchemeData(_ data: TrainingSchemeData, completion: @escaping ApiTrainingSchemeCompletion) {
-        if let schemeIdx = allTrainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
-//            if let SchemeDataIdx = trainingSchemes[schemeIdx].trainingSchemeData.firstIndex(where: { $0.id == data.id }){
+        if let _ = allTrainingSchemes.firstIndex(where: { $0.id == data.trainingSchemeId }){
                 Service.updateTrainingSchemeData(data, completion: completion)
-//                UserDefaults.trainingSchemes[schemeIdx].trainingSchemeData.remove(at: SchemeDataIdx)
-//                Logger.log("Training scheme data \(data) removed")
-//                completion(nil)
-//            }
-//            else{
-//                Logger.error("Cannot find Training Scheme data: \(data) to remove")
-//                completion(.cannotFindData)
-//            }
         }
         else{
             Logger.error("Cannot remove Training Scheme data: \(data) because the training Scheme doesn't exist")
@@ -338,7 +348,102 @@ extension Service: TrainingSchemesApiProtocol{
 //MARK: - TrainingsProtocol
 extension Service: TrainingsApiProtocol{
     static var trainings: [Training]{
-        get{ UserDefaults.trainings }
+        var activeTrainings: [Training] = [Training]()
+        
+        UserDefaults.trainings.filter{ $0.isRemoved != true }.forEach { training in
+            activeTrainings.append(training)
+            let trainingData = training.trainingData.filter({ $0.isRemoved != true })
+            if let lastIndex = activeTrainings.firstIndex(where: { $0.id == training.id }) {
+                activeTrainings[lastIndex].trainingData = trainingData
+            }
+        }
+
+        return activeTrainings
+    }
+    
+    private static var allTrainings: [Training] {
+        UserDefaults.trainings
+    }
+    
+    static func createTraining(_ credentials: TrainingCredentialsProtocol, completion: @escaping ApiAddTrainingCompletion) {
+        var tr = Training(userId: credentials.userId, trainingMethod: credentials.trainingMethod, planId: credentials.planId, trainingCounter: credentials.trainingCounter, createDate: .now, subType: credentials.subType, trainingData: [TrainingData]())
+        
+        var trData = [TrainingData]()
+        var counter = 0
+        credentials.trainingData.forEach { dataCedentials in
+            trData.append(TrainingData(trainingId: tr.id, exercise: dataCedentials.exercise, exerciseOrder: dataCedentials.exerciseOrder, plannedNumberOfSeries: dataCedentials.plannedNumberOfSeries, plannedWeight: dataCedentials.plannedWeight))
+            counter += 1
+        }
+        tr.trainingData = trData
+        
+        UserDefaults.trainings.append(tr)
+        Logger.log("New Training created \(tr)")
+        completion(nil, tr)
+    }
+    
+    static func removeTraining(_ training: Training, completion: @escaping ApiTrainingCompletion) {
+        if let _ = allTrainings.firstIndex(where: { $0.id == training.id }){
+            Service.updateTraining(training, completion: completion)
+            Logger.log("Training scheme \(trainings) was removed")
+        }
+        else{
+            Logger.error("Cannot remove Training because it doesn't exist. \(training)")
+            completion(.cannotFind)
+        }
+    }
+    
+    static func updateTraining(_ training: Training, completion: ApiTrainingCompletion?) {
+        if let idx = allTrainings.firstIndex(where: { $0.id == training.id }){
+            UserDefaults.trainings[idx] = training
+            Logger.log("Training \(training) was updated")
+            completion?(nil)
+        }
+        else{
+            Logger.error("Cannot edit Training because it doesn't exist. \(training)")
+            completion?(.cannotFind)
+        }
+    }
+    
+    static func createTrainingData(_ credentials: TrainingDataCredentialsProtocol, completion: @escaping ApiAddTrainingDataCompletion) {
+        if let trainingIdx = allTrainings.firstIndex(where: { $0.id == credentials.trainingId }){
+            let counter = UserDefaults.trainings[trainingIdx].trainingData.count
+            let data = TrainingData(trainingId: credentials.trainingId, exercise: credentials.exercise, exerciseOrder: credentials.exerciseOrder, plannedNumberOfSeries: credentials.plannedNumberOfSeries, plannedWeight: credentials.plannedWeight)
+            UserDefaults.trainings[trainingIdx].trainingData.append(data)
+            Logger.log("Training data \(data) created")
+            completion(nil, data)
+        }
+        else{
+            Logger.error("Cannot create training data because the Training \(credentials.trainingId) doesn't exist")
+            completion(.cannotFind, nil)
+        }
+    }
+    
+    static func removeTrainingData(_ data: TrainingData, completion: @escaping ApiTrainingCompletion) {
+        if let _ = allTrainings.firstIndex(where: { $0.id == data.trainingId }){
+                Service.updateTrainingData(data, completion: completion)
+        }
+        else{
+            Logger.error("Cannot remove Training data: \(data) because the training doesn't exist")
+            completion(.cannotFind)
+        }
+    }
+    
+    static func updateTrainingData(_ data: TrainingData, completion: @escaping ApiTrainingCompletion) {
+        if let trainingIdx = allTrainings.firstIndex(where: { $0.id == data.trainingId }){
+            if let dataIdx = allTrainings[trainingIdx].trainingData.firstIndex(where: { $0.id == data.id }){
+                UserDefaults.trainings[trainingIdx].trainingData[dataIdx] = data
+                Logger.log("Training data \(data) updated")
+                completion(nil)
+            }
+            else{
+                Logger.error("Cannot find Training data: \(data) to update")
+                completion(.cannotFindData)
+            }
+        }
+        else{
+            Logger.error("Cannot update Training data: \(data) because the training doesn't exist")
+            completion(.cannotFind)
+        }
     }
 }
 

@@ -10,6 +10,7 @@ import Foundation
 typealias PlanViewCompletion = ApiTrainingSchemeCompletion
 typealias AddTrainingPlanCompletion = ApiAddTrainingSchemeCompletion
 typealias TrainingPlanDataCompletion = ApiAddTrainingDataSchemeCompletion
+typealias TrainingPlanRunCompletion = (TrainingError?) -> Void
 
 protocol PlanViewModelProtocol{
     var count: Int {get}
@@ -25,6 +26,7 @@ protocol PlanViewModelProtocol{
     func updatePlanData(_ data: TrainingSchemeData, completion: @escaping PlanViewCompletion)
     func removePlanData(_ data: TrainingSchemeData, completion: @escaping PlanViewCompletion)
     mutating func loadScheme(_ data: TrainingScheme)
+    func runCurrentPlan(_ completion: @escaping TrainingPlanRunCompletion)
 }
 
 struct PlanViewModel{
@@ -105,5 +107,44 @@ extension PlanViewModel: PlanViewModelProtocol{
         }
         newScheme.trainingSchemeData = newSchemeData
         currentTrainingScheme(.init(withTrainingScheme: newScheme))
+    }
+    
+    func runCurrentPlan(_ completion: @escaping TrainingPlanRunCompletion) {
+        var modifiedWeightCounter: CGFloat = 0.0
+        for i in (1..._currentTraining.numberOfWorkouts).reversed() {
+            let trCredentials: TrainingCredentialsProtocol = TrainingCredentials(trainingCounter: i,
+                                                                                 subType: currentTrainingScheme.subType,
+                                                                                 trainingData: [TrainingDataCredentialsProtocol](),
+                                                                                 trainingMethod: currentTrainingScheme.trainingMethod,
+                                                                                 planId: currentTrainingScheme.id,
+                                                                                 userId: currentTrainingScheme.userId)
+            
+            Service.createTraining(trCredentials) { (error: TrainingError?, tr: Training?) in
+                if let error = error {
+                    completion(error)
+                    return
+                }
+                if let tr = tr {
+                    currentTrainingScheme.trainingSchemeData.forEach { (schemeData: TrainingSchemeData) in
+                        var modifiedWeight: CGFloat = modifiedWeightCounter * schemeData.addWeight
+                        modifiedWeight = modifiedWeight < 0 ? 0 : modifiedWeight
+                        
+                        let data: TrainingDataCredentialsProtocol = TrainingCredentials.TrainingDataCredentials(trainingId: tr.id,
+                                                                                                                exercise: schemeData.exercise,
+                                                                                                                exerciseOrder: schemeData.exerciseOrder,
+                                                                                                                plannedNumberOfSeries: schemeData.numberOfSeries,
+                                                                                                                plannedWeight: schemeData.weight - modifiedWeight)
+                        Service.createTrainingData(data) { (error: TrainingError?, trData: TrainingData?) in
+                            if let error = error {
+                                completion(error)
+                                return
+                            }
+                        }
+                    }
+                    modifiedWeightCounter += 1.0
+                }
+            }
+        }
+        completion(nil)//ready
     }
 }
