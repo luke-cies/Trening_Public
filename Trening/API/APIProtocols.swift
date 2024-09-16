@@ -53,8 +53,8 @@ enum TrainingError: Error{
     
     var description: String{
         switch(self){
-        case .cannotFind:   return "trening.alert.error.cannotFind.message".localized
-        case .cannotFindData: return "trening.alert.error.cannotFindData.message".localized
+        case .cannotFind:   return "training.alert.error.cannotFind.message".localized
+        case .cannotFindData: return "training.alert.error.cannotFindData.message".localized
         }
     }
 }
@@ -89,6 +89,7 @@ protocol TrainingSchemeDataCredentialsProtocol{
 
 protocol TrainingCredentialsProtocol {
     var trainingCounter: Int {get set}
+    var plannedNumberOfWorkouts: Int {get set}
     var subType: TrainingSubType {get set}
     var trainingData: [TrainingDataCredentialsProtocol] {get set}
     var trainingMethod: TrainingMethod {get set}

@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+extension Date {
+    func getString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        
+        return formatter.string(from: self)
+    }
+}

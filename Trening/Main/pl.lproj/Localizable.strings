@@ -15,6 +15,7 @@
 "save" = "Zapisz";
 "search" = "Wyszukaj";
 "sort" = "Sortuj";
+"of" = "z";
 
 //MARK: - Model
 "training.status.todo" = "Przygotowany";
@@ -136,5 +137,16 @@
 "plan.alert.error.cannotFind.message" = "Nie można znaleźć takiego planu treningu";
 "plan.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w planie treningu";
 "plan.add.run" = "Rozpocznij";
-"trening.alert.error.cannotFind.message" = "Nie można znaleźć takiego treningu";
-"trening.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w treningu";
+"training.alert.error.cannotFind.message" = "Nie można znaleźć takiego treningu";
+"training.alert.error.cannotFindData.message" = "Nie można znaleźć takiego ćwiczenia w treningu";
+
+//MARK: - Trainings
+"training.list.title" = "Lista treningów";
+"training.list.showHistory" = "Historia";
+"training.run.header.title" = "Wykonaj trening";
+"training.run.header.type" = "Typ";
+"training.run.header.date" = "Data";
+"training.run.header.finishExercise" = "Zakończ ćwiczenie";
+"training.run.header.nextExercise" = "Następne świczenie";
+"training.run.header.prevExercise" = "Poprzednie ćwiczenie";
+"training.run.header.addSeries" = "Dodaj serię";

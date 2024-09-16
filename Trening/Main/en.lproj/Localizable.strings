@@ -15,9 +15,10 @@
 "save" = "Save";
 "search" = "Search";
 "sort" = "Sort";
+"of" = "of";
 
 //MARK: - Model
-"training.status.todo" = "Ready";
+"training.status.todo" = "To do";
 "training.status.inProgress" = "In progress";
 "training.status.done" = "Done";
 "training.status.synchronised" = "Synchronised";
@@ -136,5 +137,16 @@
 "plan.alert.error.cannotFind.message" = "Cannot find such training plan";
 "plan.alert.error.cannotFindData.message" = "Cannot find such exercise in the training plan";
 "plan.add.run" = "Run";
-"trening.alert.error.cannotFind.message" = "Cannot find such training";
-"trening.alert.error.cannotFindData.message" = "Cannot find such exercise in the training";
+"training.alert.error.cannotFind.message" = "Cannot find such training";
+"training.alert.error.cannotFindData.message" = "Cannot find such exercise in the training";
+
+//MARK: - Trainings
+"training.list.title" = "Training list";
+"training.list.showHistory" = "History";
+"training.run.header.title" = "Run training";
+"training.run.header.type" = "Type";
+"training.run.header.date" = "Date";
+"training.run.header.finishExercise" = "Finish exercise";
+"training.run.header.nextExercise" = "Next Exercise";
+"training.run.header.prevExercise" = "Prev Exercise";
+"training.run.header.addSeries" = "Add series";

@@ -34,7 +34,7 @@ class SearchBar: UIView{
     private func setupUI(){
         setHeight(height: Consts.searchBarHeight)
         addSubviews(textField)
-        textField.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 10)
+        textField.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: Consts.standardPaddingTopBottom, paddingLeft: Consts.standardPaddingLeftRight, paddingBottom: Consts.standardPaddingTopBottom, paddingRight: Consts.standardPaddingLeftRight)
     }
 }
 

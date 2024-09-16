@@ -59,11 +59,11 @@ class HeaderMenuViewAdd: UIView{
         label.textColor = .TBlackText
         
         let stack = UIStackView(axis: .horizontal, spacing: 5, subviews: [label, addButton])
-        addButton.setWidth(width: 90)
+        addButton.setWidth(width: 120)
         addButton.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         
         addSubviews(line, stack)
-        stack.anchor(top: topAnchor, left: leftAnchor, /*bottom: bottomAnchor,*/right: rightAnchor, paddingTop: 5, paddingLeft: 10, /*paddingBottom: 25,*/ paddingRight: 10)
+        stack.anchor(top: topAnchor, left: leftAnchor, /*bottom: bottomAnchor,*/right: rightAnchor, paddingTop: Consts.standardPaddingTopBottom, paddingLeft: Consts.standardPaddingLeftRight, /*paddingBottom: 25,*/ paddingRight: Consts.standardPaddingLeftRight)
         line.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 15, height: 1)
     }
     

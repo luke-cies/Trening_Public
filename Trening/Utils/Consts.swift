@@ -16,6 +16,11 @@ struct Consts{
     static var mainMenuButtonFontSize: CGFloat = 20
     static var mainMenuHeight: CGFloat = 75
     
+    static var trainingRunHeaderHeight: CGFloat = 280
+    
+    static var standardPaddingLeftRight: CGFloat = 10
+    static var standardPaddingTopBottom: CGFloat = 5
+    
     static var titleFontSize: CGFloat = 23
     static var standardLabelFontSize: CGFloat = 15
     static let searchBarHeight: CGFloat = 50

@@ -217,13 +217,27 @@ struct TrainingSchemeData: Codable{
     }
 }
 
-struct Training: Codable{
+protocol TrainingProtocol {
+    var userId: String {get}//creator
+    var id: String {get}
+    var status: TrainingStatus {get set}
+    var trainingMethod: TrainingMethod {get set}
+    var trainingCounter: Int {get set}
+    var plannedNumberOfWorkouts: Int {get}
+    var createDate: Date {get}
+    var timestamp: Date {get set}
+    var subType: TrainingSubType {get set}
+    var trainingData: [TrainingData] {get set}
+}
+
+struct Training: Codable, TrainingProtocol {
     let userId: String//creator
     var id: String = UUID().uuidString
     var status: TrainingStatus = .toDo
     var trainingMethod: TrainingMethod
     let planId: String//TrainingScheme.id
-    let trainingCounter: Int
+    var trainingCounter: Int
+    let plannedNumberOfWorkouts: Int
     let createDate: Date
     var timestamp: Date = .now
     var subType: TrainingSubType

@@ -116,6 +116,9 @@ class MainMenuController: GradientBaseController{
         else if sender == planButton{
             vc = PlannedTrainingList()
         }
+        else if sender == trainingButton{
+            vc = TrainingList()
+        }
         else{
             print("Dokończ")//TODO: Dokończ
             return

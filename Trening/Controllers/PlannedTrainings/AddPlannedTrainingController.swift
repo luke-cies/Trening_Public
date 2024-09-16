@@ -29,7 +29,7 @@ class AddPlannedTrainingController: GradientBaseController{
         
         typeSegmentedControl.setWidth(width: 100)
         subTypeSegmentedControl.setWidth(width: 250)
-        stack.anchor(top: v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 5, paddingRight: 10)
+        stack.anchor(top: v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, paddingTop: Consts.standardPaddingTopBottom, paddingLeft: Consts.standardPaddingLeftRight, paddingBottom: Consts.standardPaddingTopBottom, paddingRight: Consts.standardPaddingLeftRight)
         v.setHeight(height: 150)
         
         return v

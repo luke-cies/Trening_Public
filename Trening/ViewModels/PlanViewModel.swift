@@ -112,7 +112,8 @@ extension PlanViewModel: PlanViewModelProtocol{
     func runCurrentPlan(_ completion: @escaping TrainingPlanRunCompletion) {
         var modifiedWeightCounter: CGFloat = 0.0
         for i in (1..._currentTraining.numberOfWorkouts).reversed() {
-            let trCredentials: TrainingCredentialsProtocol = TrainingCredentials(trainingCounter: i,
+            let trCredentials: TrainingCredentialsProtocol = TrainingCredentials(trainingCounter: i, 
+                                                                                 plannedNumberOfWorkouts: currentTrainingScheme.numberOfWorkouts,
                                                                                  subType: currentTrainingScheme.subType,
                                                                                  trainingData: [TrainingDataCredentialsProtocol](),
                                                                                  trainingMethod: currentTrainingScheme.trainingMethod,

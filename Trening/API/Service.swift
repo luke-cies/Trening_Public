@@ -38,6 +38,7 @@ struct TrainingSchemeDataCredentials: TrainingSchemeDataCredentialsProtocol{
 
 struct TrainingCredentials: TrainingCredentialsProtocol {
     var trainingCounter: Int
+    var plannedNumberOfWorkouts: Int
     var subType: TrainingSubType
     var trainingData: [TrainingDataCredentialsProtocol]
     var trainingMethod: TrainingMethod
@@ -366,7 +367,7 @@ extension Service: TrainingsApiProtocol{
     }
     
     static func createTraining(_ credentials: TrainingCredentialsProtocol, completion: @escaping ApiAddTrainingCompletion) {
-        var tr = Training(userId: credentials.userId, trainingMethod: credentials.trainingMethod, planId: credentials.planId, trainingCounter: credentials.trainingCounter, createDate: .now, subType: credentials.subType, trainingData: [TrainingData]())
+        var tr = Training(userId: credentials.userId, trainingMethod: credentials.trainingMethod, planId: credentials.planId, trainingCounter: credentials.trainingCounter, plannedNumberOfWorkouts: credentials.plannedNumberOfWorkouts, createDate: .now, subType: credentials.subType, trainingData: [TrainingData]())
         
         var trData = [TrainingData]()
         var counter = 0
@@ -406,11 +407,21 @@ extension Service: TrainingsApiProtocol{
     
     static func createTrainingData(_ credentials: TrainingDataCredentialsProtocol, completion: @escaping ApiAddTrainingDataCompletion) {
         if let trainingIdx = allTrainings.firstIndex(where: { $0.id == credentials.trainingId }){
-            let counter = UserDefaults.trainings[trainingIdx].trainingData.count
             let data = TrainingData(trainingId: credentials.trainingId, exercise: credentials.exercise, exerciseOrder: credentials.exerciseOrder, plannedNumberOfSeries: credentials.plannedNumberOfSeries, plannedWeight: credentials.plannedWeight)
-            UserDefaults.trainings[trainingIdx].trainingData.append(data)
-            Logger.log("Training data \(data) created")
-            completion(nil, data)
+//            UserDefaults.trainings[trainingIdx].trainingData.append(data)
+            
+            var training = allTrainings[trainingIdx]
+            training.trainingData.append(data)
+            updateTraining(training) { (error: TrainingError?) in
+                if let error = error {
+                    Logger.log("Training data \(data) NOT created because of error: \(error)")
+                    completion(error, nil)
+                    return
+                }
+                
+                Logger.log("Training data \(data) created")
+                completion(nil, data)
+            }
         }
         else{
             Logger.error("Cannot create training data because the Training \(credentials.trainingId) doesn't exist")
@@ -431,9 +442,21 @@ extension Service: TrainingsApiProtocol{
     static func updateTrainingData(_ data: TrainingData, completion: @escaping ApiTrainingCompletion) {
         if let trainingIdx = allTrainings.firstIndex(where: { $0.id == data.trainingId }){
             if let dataIdx = allTrainings[trainingIdx].trainingData.firstIndex(where: { $0.id == data.id }){
-                UserDefaults.trainings[trainingIdx].trainingData[dataIdx] = data
-                Logger.log("Training data \(data) updated")
-                completion(nil)
+//                UserDefaults.trainings[trainingIdx].trainingData[dataIdx] = data
+                
+                var training = allTrainings[trainingIdx]
+                training.trainingData[dataIdx] = data
+                
+                updateTraining(training) { (error: TrainingError?) in
+                    if let error = error {
+                        Logger.log("Training data \(data) NOT updated because of error: \(error)")
+                        completion(error)
+                        return
+                    }
+                    
+                    Logger.log("Training data \(data) updated")
+                    completion(nil)
+                }
             }
             else{
                 Logger.error("Cannot find Training data: \(data) to update")
