@@ -49,6 +49,13 @@ struct DefaultDataModel{
                 Logger.error("Cannot create default user: \(c)")
             }
         }
+        
+        let testUserCredentials = RegistrationCredentials(email: "test@test.test", password: "test123", firstName: "Test", lastName: "Account", profileImage: avatar)
+        Service.createUser(credentials: testUserCredentials) { (err: UserOperationError?, user: User?) in
+            if err != nil{
+                Logger.error("Cannot create default user: \(testUserCredentials)")
+            }
+        }
     }
     
     //MARK: - Exercises
